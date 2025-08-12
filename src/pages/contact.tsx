@@ -34,7 +34,7 @@ const ContactPage: React.FC = () => {
                 name="name"
                 type="text"
                 autoComplete="name"
-                placeholder="e.g., Rita Abou Rjeily"
+                placeholder="e.g., Gio R"
                 title="Enter your full name"
                 className="mt-1 w-full rounded-xl border border-gray-200 p-3 focus:outline-none focus:ring-2 focus:ring-blue-600"
                 required
