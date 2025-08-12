@@ -1,38 +1,30 @@
-// src/App.tsx
-import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Header from "./components/common/Header";
-import "./styles/main.css";
-
-// Pages
 import About from "./pages/About";
-import FeaturesPage from "./pages/features";       // ← make sure this file exists
-import ImpactPage from "./pages/impact";           // ← make sure this file exists
-import FuturePlansPage from "./pages/futureplans"; // ← corrected "future plans"
-import ContactPage from "./pages/contact";         // ← new contact page
+import FeaturesPage from "./pages/features";
+import ImpactPage from "./pages/impact";
+import FuturePlansPage from "./pages/futureplans";
+import ContactPage from "./pages/contact";
 
-// Simple Home placeholder (replace when ready)
+const App: React.FC = () => (
+  <Router>
+    <Header />
+    <main>
+      <Routes>
+        {/* send root to About */}
+        <Route path="/" element={<Navigate to="/about" replace />} />
 
+        <Route path="/about" element={<About />} />
+        <Route path="/features" element={<FeaturesPage />} />
+        <Route path="/impact" element={<ImpactPage />} />
+        <Route path="/future" element={<FuturePlansPage />} />
+        <Route path="/contact" element={<ContactPage />} />
 
-const App: React.FC = () => {
-  return (
-    <Router>
-      <div className="App">
-        <Header />
-        <main>
-          <Routes>
-            <Route path="/About" element={<About />} />
-            <Route path="/features" element={<FeaturesPage />} />
-            <Route path="/impact" element={<ImpactPage />} />
-            <Route path="/future" element={<FuturePlansPage />} />      {/* Future Plans */}
-            <Route path="/contact" element={<ContactPage />} />         {/* Contact Us */}
-          </Routes>
-        </main>
-        {/* <Footer /> */}
-      </div>
-    </Router>
-  );
-};
+        {/* catch-all → About */}
+        <Route path="*" element={<Navigate to="/about" replace />} />
+      </Routes>
+    </main>
+  </Router>
+);
 
 export default App;
