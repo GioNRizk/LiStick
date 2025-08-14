@@ -1,6 +1,7 @@
 // src/pages/About.tsx
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Eye, Navigation, Users, Heart, Shield, Zap, Target, Award } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 // shared components
 import Hero from "../components/features/Hero";
@@ -16,9 +17,6 @@ import pic3 from "../assets/images/pic3.jpg";
 import gioImg from "../assets/images/gio.jpg";
 import marcImg from "../assets/images/marc.jpg";
 import rimaImg from "../assets/images/teamli.jpg"; // Rima photo (we crop via CSS)
-
-// award banner photo (team)
-//import teamAwardImg from "../assets/images/teamli.jpg";
 
 const productImages = [
   { id: 1, image: pic1 },
@@ -51,6 +49,17 @@ const teamMembers = [
 ];
 
 const AboutPage: React.FC = () => {
+  const dynamicTitles = ["LiStick", "Freedom", "Safety", "Guidance"];
+  const [currentTitleIndex, setCurrentTitleIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTitleIndex((prevIndex) => (prevIndex + 1) % dynamicTitles.length);
+    }, 3000); // Change title every 3 seconds
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div className="bg-white text-gray-800 overflow-x-hidden">
       {/* HERO — shared component, consistent height with other pages */}
@@ -61,14 +70,23 @@ const AboutPage: React.FC = () => {
           </div>
         }
         title={
-          <span className="bg-gradient-to-r from-blue-500 via-teal-500 to-purple-500 bg-clip-text text-transparent font-extrabold">
-            LiStick
-          </span>
+          <AnimatePresence mode="wait">
+            <motion.span
+              key={dynamicTitles[currentTitleIndex]}
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: -20, opacity: 0 }}
+              transition={{ duration: 0.5, ease: "easeInOut" }}
+              className="inline-block bg-gradient-to-r from-blue-500 via-teal-500 to-purple-500 bg-clip-text text-transparent font-extrabold"
+            >
+              {dynamicTitles[currentTitleIndex]}
+            </motion.span>
+          </AnimatePresence>
         }
         subtitle="Pioneering a new era of independence and safety for the visually impaired through cutting-edge technology and compassionate innovation."
         showScrollHint
       />
-
+    
       {/* Product Showcase */}
       <Section className="py-20 bg-gradient-to-br from-gray-50 via-blue-50/30 to-teal-50/30 relative overflow-hidden">
         {/* Background decoration */}
