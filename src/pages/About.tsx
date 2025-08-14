@@ -221,7 +221,69 @@ const AboutPage: React.FC = () => {
         </div>
       </Section>
 
-      {/* Mission */}
+      {/* Team */} {/* Moved this section up */}
+      <Section className="py-20 bg-gradient-to-br from-white via-gray-50/30 to-blue-50/30">
+        <div className="text-center mb-16">
+          <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-2xl mb-6">
+            <Users className="w-6 h-6 text-white" />
+          </div>
+          <h2 className="text-5xl md:text-6xl font-black mb-6 text-gray-900">Meet the Innovators</h2>
+          <p className="text-xl md:text-2xl text-gray-600 max-w-4xl mx-auto font-light">
+            Passionate engineers, visionary designers, and dedicated accessibility advocates working together to reshape the future of assistive technology.
+          </p>
+        </div>
+
+        <div className="mx-auto max-w-7xl grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
+          {[teamMembers[0], teamMembers[2], teamMembers[1]].map((member, index) => (
+            <div
+              key={member.name}
+              className="group relative rounded-3xl border border-gray-200/50 bg-white/80 backdrop-blur-sm p-8 shadow-lg hover:shadow-2xl transition-all duration-700 hover:-translate-y-3 overflow-hidden"
+              style={{
+                animationDelay: `${index * 100}ms`,
+              }}
+            >
+              {/* Background decoration */}
+              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-blue-100/50 to-transparent rounded-full blur-2xl" />
+              
+              <div className="relative z-10">
+                <div className="relative mx-auto h-44 w-44 overflow-hidden rounded-3xl ring-4 ring-gray-100 group-hover:ring-blue-300 transition-all duration-500 mb-6">
+                  <img
+                    src={member.image}
+                    alt={`${member.name} - ${member.role}`}
+                    className={`h-full w-full object-cover transition-all duration-700 group-hover:scale-110 ${member.cropStyle}`}
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                </div>
+                
+                <div className="text-center space-y-2">
+                  <h3 className="text-2xl font-bold text-gray-900 group-hover:text-blue-700 transition-colors duration-300">
+                    {member.name}
+                  </h3>
+                  <p className="text-lg font-semibold text-teal-600 group-hover:text-teal-700 transition-colors duration-300">
+                    {member.role}
+                  </p>
+                  {member.subtitle && (
+                    <p className="text-gray-600 font-medium group-hover:text-gray-700 transition-colors duration-300">
+                      {member.subtitle}
+                    </p>
+                  )}
+                </div>
+                
+                {/* Hover overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-blue-600/90 via-blue-400/50 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-3xl flex items-end p-6">
+                  <div className="text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-500 delay-100">
+                    <p className="font-semibold text-lg mb-1">{member.name}</p>
+                    <p className="text-blue-100 text-sm">{member.subtitle}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      {/* Mission */} {/* This section is now after Team */}
       <Section className="py-20 bg-gradient-to-br from-blue-50 via-indigo-50/50 to-teal-50 relative overflow-hidden">
         {/* Background decorations */}
         <div className="absolute top-0 left-0 w-72 h-72 bg-gradient-to-br from-blue-200/30 to-transparent rounded-full blur-3xl" />
@@ -313,68 +375,6 @@ const AboutPage: React.FC = () => {
               </div>
               <div className="text-gray-300 text-lg font-medium">
                 {s.label}
-              </div>
-            </div>
-          ))}
-        </div>
-      </Section>
-
-      {/* Team */}
-      <Section className="py-20 bg-gradient-to-br from-white via-gray-50/30 to-blue-50/30">
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-2xl mb-6">
-            <Users className="w-6 h-6 text-white" />
-          </div>
-          <h2 className="text-5xl md:text-6xl font-black mb-6 text-gray-900">Meet the Innovators</h2>
-          <p className="text-xl md:text-2xl text-gray-600 max-w-4xl mx-auto font-light">
-            Passionate engineers, visionary designers, and dedicated accessibility advocates working together to reshape the future of assistive technology.
-          </p>
-        </div>
-
-        <div className="mx-auto max-w-7xl grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
-          {[teamMembers[0], teamMembers[2], teamMembers[1]].map((member, index) => (
-            <div
-              key={member.name}
-              className="group relative rounded-3xl border border-gray-200/50 bg-white/80 backdrop-blur-sm p-8 shadow-lg hover:shadow-2xl transition-all duration-700 hover:-translate-y-3 overflow-hidden"
-              style={{
-                animationDelay: `${index * 100}ms`,
-              }}
-            >
-              {/* Background decoration */}
-              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-blue-100/50 to-transparent rounded-full blur-2xl" />
-              
-              <div className="relative z-10">
-                <div className="relative mx-auto h-44 w-44 overflow-hidden rounded-3xl ring-4 ring-gray-100 group-hover:ring-blue-300 transition-all duration-500 mb-6">
-                  <img
-                    src={member.image}
-                    alt={`${member.name} - ${member.role}`}
-                    className={`h-full w-full object-cover transition-all duration-700 group-hover:scale-110 ${member.cropStyle}`}
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                </div>
-                
-                <div className="text-center space-y-2">
-                  <h3 className="text-2xl font-bold text-gray-900 group-hover:text-blue-700 transition-colors duration-300">
-                    {member.name}
-                  </h3>
-                  <p className="text-lg font-semibold text-teal-600 group-hover:text-teal-700 transition-colors duration-300">
-                    {member.role}
-                  </p>
-                  {member.subtitle && (
-                    <p className="text-gray-600 font-medium group-hover:text-gray-700 transition-colors duration-300">
-                      {member.subtitle}
-                    </p>
-                  )}
-                </div>
-                
-                {/* Hover overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-blue-600/90 via-blue-400/50 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-3xl flex items-end p-6">
-                  <div className="text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-500 delay-100">
-                    <p className="font-semibold text-lg mb-1">{member.name}</p>
-                    <p className="text-blue-100 text-sm">{member.subtitle}</p>
-                  </div>
-                </div>
               </div>
             </div>
           ))}
