@@ -314,7 +314,7 @@ const AboutPage: React.FC = () => {
         </div>
 
         <div className="mx-auto max-w-7xl grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
-          {[teamMembers[1], teamMembers[2], teamMembers[0]].map((member, index) => (
+          {[teamMembers[0], teamMembers[2], teamMembers[1]].map((member, index) => (
             <div
               key={member.name}
               className="group relative rounded-3xl border border-gray-200/50 bg-white/80 backdrop-blur-sm p-8 shadow-lg hover:shadow-2xl transition-all duration-700 hover:-translate-y-3 overflow-hidden"
