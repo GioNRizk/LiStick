@@ -2,7 +2,8 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
 import './styles/main.css'
-import logoPng from "./assets/images/logo.png";
+import logoPng from "./assets/images/Li-stick icon.png";
+
 
 const ensureFavicon = () => {
   let link = document.querySelector<HTMLLinkElement>('link[rel="icon"]');
