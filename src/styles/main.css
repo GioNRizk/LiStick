@@ -1,3 +1,118 @@
-/* styles/main.css */
-
 @import "tailwindcss";
+
+/* === hero background animations === */
+@keyframes gradient-shift {
+
+    0%,
+    100% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+@keyframes hue-rotate {
+    from {
+        filter: hue-rotate(0deg);
+    }
+
+    to {
+        filter: hue-rotate(360deg);
+    }
+}
+
+/* Use this class in Hero.tsx */
+.hero-animated-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.85;
+    /* make it obvious; tweak later */
+    background:
+        radial-gradient(32rem 32rem at 20% 20%, rgba(59, 130, 246, 0.35), transparent 60%),
+        radial-gradient(36rem 36rem at 80% 20%, rgba(20, 184, 166, 0.35), transparent 60%),
+        radial-gradient(40rem 40rem at 40% 80%, rgba(147, 51, 234, 0.35), transparent 60%);
+    background-size: 220% 220%;
+    animation:
+        gradient-shift 6s cubic-bezier(0.6, 0.1, 0.4, 0.9) infinite,
+        /* movement speed */
+        hue-rotate 18s linear infinite;
+    /* color morph speed */
+}
+
+/* --- Light sweep --- */
+@keyframes light-sweep {
+    0% {
+        transform: translateX(-120%) skewX(-12deg);
+        opacity: 0;
+    }
+
+    15% {
+        opacity: .25;
+    }
+
+    50% {
+        transform: translateX(20%) skewX(-12deg);
+        opacity: .18;
+    }
+
+    85% {
+        opacity: .25;
+    }
+
+    100% {
+        transform: translateX(120%) skewX(-12deg);
+        opacity: 0;
+    }
+}
+
+.hero-light-sweep {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    /* above bg, below content */
+    mix-blend-mode: screen;
+}
+
+.hero-light-sweep::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -25%;
+    height: 100%;
+    width: 45%;
+    background: linear-gradient(110deg,
+            rgba(255, 255, 255, 0) 0%,
+            rgba(255, 255, 255, .22) 50%,
+            rgba(255, 255, 255, 0) 100%);
+    filter: blur(18px);
+    animation: light-sweep 5s ease-in-out infinite;
+}
+
+
+/* --- Vignette --- */
+@keyframes vignette-pulse {
+
+    0%,
+    100% {
+        opacity: .35;
+    }
+
+    50% {
+        opacity: .5;
+    }
+}
+
+.hero-vignette {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    background:
+        radial-gradient(80% 65% at 50% 55%, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, .6) 100%);
+    animation: vignette-pulse 8s ease-in-out infinite;
+}

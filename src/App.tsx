@@ -1,27 +1,33 @@
+// src/App.tsx
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Header from "./components/common/Header";
+
+// Pages
+import HomePage from "./pages/home";
 import About from "./pages/About";
 import FeaturesPage from "./pages/features";
 import ImpactPage from "./pages/impact";
 import FuturePlansPage from "./pages/futureplans";
-import ContactPage from "./pages/contact";
 
 const App: React.FC = () => (
   <Router>
     <Header />
     <main>
       <Routes>
-        {/* send root to About */}
-        <Route path="/" element={<Navigate to="/about" replace />} />
+        {/* Home is now "/" */}
+        <Route path="/" element={<HomePage />} />
 
+        {/* Core pages */}
         <Route path="/about" element={<About />} />
         <Route path="/features" element={<FeaturesPage />} />
         <Route path="/impact" element={<ImpactPage />} />
         <Route path="/future" element={<FuturePlansPage />} />
-        <Route path="/contact" element={<ContactPage />} />
 
-        {/* catch-all → About */}
-        <Route path="*" element={<Navigate to="/about" replace />} />
+        {/* Contact is now part of About → jump to #contact */}
+        <Route path="/contact" element={<Navigate to="/about#contact" replace />} />
+
+        {/* Fallback to Home */}
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </main>
   </Router>

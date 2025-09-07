@@ -2,14 +2,14 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FiMenu, FiX } from "react-icons/fi";
-import logo from "../../assets/images/logo.png";
+import logo from "../../assets/images/Li-stick icon.png";
 
 const navLinks = [
-  { name: "About", href: "/about" },
-  { name: "Features", href: "/features" },
-  { name: "Impact", href: "/impact" },
-  { name: "Future Plans", href: "/future" },
-  { name: "Contact", href: "/contact" },
+  { name: "Home", href: "/" },
+  { name: "Features", href: "/features" }, // add video of stick, screenshots of mobile app and video of mobile app at the end see the future plans
+  { name: "Impact", href: "/impact" },  // correct the SDG impact, add the traction that we have of the competitions
+  { name: "Future Plans", href: "/future" },  // what we will build the new cane with the features and mobile app new features
+  { name: "About Us", href: "/about" },  // add about how the story started with simple contact form, email, social media links
 ];
 
 const Header: React.FC = () => {
@@ -29,28 +29,33 @@ const Header: React.FC = () => {
       <header
         className={[
           "fixed top-0 left-0 right-0 z-50",
-          "px-4 sm:px-6 py-3 transition-all duration-300 ease-out",
+          "px-4 sm:px-6 py-1 transition-all duration-300 ease-out",
           "bg-white/85 backdrop-blur-md border-b border-black/5",
           isScrolled ? "shadow-md" : "shadow-none",
         ].join(" ")}
       >
         <div className="relative mx-auto flex max-w-7xl items-center justify-between">
-          {/* Logo now routes to About */}
-          <Link to="/about" className="group flex flex-shrink-0 items-center gap-3">
-            <div className="relative overflow-hidden rounded-lg bg-white p-1.5 shadow-md transition-all duration-300 group-hover:shadow-lg group-hover:shadow-blue-500/20">
-              <img
-                src={logo}
-                alt="LiStick Logo"
-                className="h-9 w-9 transition-transform duration-300 group-hover:scale-105"
-              />
-            </div>
-            <div className="flex flex-col">
-              <span className="text-xl font-bold text-gray-800">LiStick</span>
-              <span className="text-xs font-medium text-gray-500 transition-colors duration-300 group-hover:text-blue-600">
-                Smart Solutions
-              </span>
-            </div>
+
+          <Link
+            to="/"
+            className="group flex flex-shrink-0 items-center gap-0"
+          >
+            <img
+              src={logo}
+              alt="LiStick Logo"
+              className="block h-10 w-auto -mr-3 sm:h-12 md:h-14 lg:h-16 transition-transform duration-300 group-hover:scale-110"
+            />
+            <span
+              className="
+      leading-none tracking-tight text-gray-800 font-bold whitespace-nowrap
+      text-xl sm:text-2xl md:text-3xl lg:text-3xl
+    "
+            >
+              Li-Stick
+            </span>
           </Link>
+
+
 
           {/* Desktop Nav */}
           <nav className="hidden items-center gap-6 lg:flex">
