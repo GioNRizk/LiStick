@@ -6,7 +6,7 @@ import { motion, useMotionValue, useTransform } from "framer-motion";
 
 type Props = {
     badge?: React.ReactNode;
-    title: string;
+    title: React.ReactNode;
     highlight?: string;
     rotatingWords?: React.ReactNode; // 👈 CHANGED: ReactNode (not string[])
     subtitle?: React.ReactNode;
