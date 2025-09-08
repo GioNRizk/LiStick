@@ -13,15 +13,16 @@ import Section from "../components/ui/Section";
 import CTA from "../components/common/CTA";
 
 // gallery images
-import pic1 from "../assets/images/pic1.jpg";
-import pic2 from "../assets/images/pic2.jpg";
-import pic3 from "../assets/images/pic3.jpg";
+import pic1 from "../assets/images/cane_pic/pic1.jpg"
+import pic2 from "../assets/images/cane_pic/pic2.jpg";
+import pic3 from "../assets/images/cane_pic/pic3.jpg";
+import pic4 from "../assets/images/cane_pic/pic4.png";
 import liIcon from "../assets/images/Li-stick icon.png";
 
 // team photos
-import gioImg from "../assets/images/gio.jpg";
-import marcImg from "../assets/images/marc.jpg";
-import rimaImg from "../assets/images/teamli.jpg"; // Rima photo (we crop via CSS)
+import gioImg from "../assets/images/team_pic/gio.jpg";
+import marcImg from "../assets/images/team_pic/marc.jpg";
+import rimaImg from "../assets/images/team_pic/teamli.jpg"; // Rima photo (we crop via CSS)
 
 // ADD your images (replace with your real paths)
 import uec1 from "../assets/images/awards/uec1.jpg";
@@ -928,9 +929,6 @@ const Home: React.FC = () => {
                 </div>
             </Section>
 
-        
-
-            {/* Award highlight */}
             {/* Award highlight */}
             <Section className="py-16 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
                 <div className="mx-auto max-w-6xl">
