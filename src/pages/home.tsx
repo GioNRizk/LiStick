@@ -16,7 +16,7 @@ import CTA from "../components/common/CTA";
 import pic1 from "../assets/images/cane_pic/pic1.jpg"
 import pic2 from "../assets/images/cane_pic/pic2.jpg";
 import pic3 from "../assets/images/cane_pic/pic3.jpg";
-import pic4 from "../assets/images/cane_pic/pic4.png";
+// import pic4 from "../assets/images/cane_pic/pic4.png";
 import liIcon from "../assets/images/Li-stick icon.png";
 
 // team photos

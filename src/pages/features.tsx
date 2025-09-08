@@ -1,6 +1,5 @@
 // src/pages/FeaturesPage.tsx
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { motion, AnimatePresence, easeOut } from "framer-motion";
 import GallerySlider, { type SlideItem } from "../components/features/GallerySlider";
 
@@ -27,10 +26,6 @@ import {
   Wifi,
   BatteryCharging,
   // Feature Highlights cards
-  Eye,
-  Navigation,
-  Heart,
-  Shield,
   HelpCircle,
   ChevronDown,
 } from "lucide-react";
