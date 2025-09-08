@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import Header from "./components/common/Header";
 
 // Pages
-import HomePage from "./pages/Home.tsx";
+import HomePage from "./pages/home";
 import About from "./pages/About";
 import FeaturesPage from "./pages/features";
 import ImpactPage from "./pages/impact";

@@ -272,7 +272,7 @@ const CompetitionCard: React.FC<{
     );
 };
 
-const AboutPage: React.FC = () => {
+const Home: React.FC = () => {
     const dynamicTitles = ["Safety", "Guidance", "Confidence", "Reliability", "Accessibility", "Precision"];
     const [currentTitleIndex, setCurrentTitleIndex] = useState(0);
 
@@ -1004,4 +1004,4 @@ const AboutPage: React.FC = () => {
     );
 };
 
-export default AboutPage;
+export default Home;
