@@ -1,8 +1,8 @@
 // src/pages/FeaturesPage.tsx
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence, easeOut } from "framer-motion";
-import GallerySlider, { type SlideItem } from "../components/features/GallerySlider";
-
+import { type SlideItem as BaseSlideItem } from "../components/features/GallerySlider";
+import { Link } from "react-router-dom";
 
 import Hero from "../components/features/Hero";
 import AnnotatedImage, { type Hotspot } from "../components/features/AnnotatedImage";
@@ -13,9 +13,7 @@ import BackToTop from "../components/ui/BackToTop";
 
 import {
   ExternalLink,
-  // Section header icons
   Zap,
-  Target,
   // Hardware bullets
   Siren,
   BellRing,
@@ -28,14 +26,25 @@ import {
   // Feature Highlights cards
   HelpCircle,
   ChevronDown,
+  Smartphone
 } from "lucide-react";
 
-import pic1 from "../assets/images/cane_pic/pic1.jpg";
-import pic2 from "../assets/images/cane_pic/pic2.jpg";
-import pic3 from "../assets/images/cane_pic/pic3.jpg";
 import pic4 from "../assets/images/cane_pic/pic4.png";
 import liIcon from "../assets/images/Li-stick icon.png";
 
+import apppic1 from "../assets//images/app_pic/app pic (1).png";
+import apppic2 from "../assets//images/app_pic/app pic (2).png";
+import apppic3 from "../assets//images/app_pic/app pic (3).png";
+import apppic4 from "../assets//images/app_pic/app pic (4).png";
+import apppic5 from "../assets//images/app_pic/app pic (5).png";
+import apppic6 from "../assets//images/app_pic/app pic (6).png";
+import apppic7 from "../assets//images/app_pic/app pic (7).png";
+import apppic8 from "../assets//images/app_pic/app pic (8).png";
+import apppic9 from "../assets//images/app_pic/app pic (9).png";
+import apppic10 from "../assets//images/app_pic/app pic (10).png";
+import apppic11 from "../assets//images/app_pic/app pic (11).png";
+import apppic12 from "../assets//images/app_pic/app pic (12).png";
+import SplitFeatureSlider from "../components/features/SplitFeatureSlider";
 
 const HOTSPOTS: Hotspot[] = [ // This is a constant, so it should be outside the component
   { x: "11%", y: "4%", label: "Emergency Button", icon: <Siren className="h-4 w-4" /> },
@@ -48,11 +57,83 @@ const HOTSPOTS: Hotspot[] = [ // This is a constant, so it should be outside the
   { x: "45%", y: "94%", label: "Water Sensor", icon: <Droplets className="h-4 w-4" /> },
 ];
 
+type SlideWithBullets = BaseSlideItem & { bullets?: string[] };
+
 // Keep this array OUTSIDE of render (module scope or useMemo) to avoid recreating it:
-const APP_SHOTS: SlideItem[] = [
-  { src: pic1, title: "Home", caption: "Quick glance safety & status" },
-  { src: pic2, title: "Pairing", caption: "One-tap Bluetooth pairing" },
-  { src: pic3, title: "Alerts", caption: "Real-time navigation alerts" },
+const ITEMS: SlideWithBullets[] = [
+  {
+    src: apppic12,
+    title: "Secure Login",
+    caption: "Sign in to monitor the stick and access caregiver tools.",
+    bullets: ["Email + password", "Forgot password flow", "Link to create account"]
+  },
+  {
+    src: apppic11,
+    title: "Create Account",
+    caption: "Register a caregiver profile in a few quick steps.",
+    bullets: ["Name, username, email", "Password setup", "Age & gender selection"]
+  },
+  {
+    src: apppic2,
+    title: "Account Profile",
+    caption: "Review personal details and manage access.",
+    bullets: ["Edit profile info", "Reset password", "Logout anytime", "Delete account"]
+  },
+  {
+    src: apppic10,
+    title: "Location History",
+    caption: "See every recorded location at a glance.",
+    bullets: ["Google Maps link per entry", "Date & time stamps", "Requester/Caregiver shown", "Offline/Online Status", "Location export options", "Filter records", "Map view per location"]
+  },
+  {
+    src: apppic9,
+    title: "Map View",
+    caption: "Power tools right on the map toolbar to view location histories on a map",
+    bullets: ["Full Screen Button", "My Location view", " Maps navigation options", "Location export options"]
+  },
+  {
+    src: apppic7,
+    title: "Map View — Standard in full screen mode",
+    caption: "Visualize recorded locations on a clean map.",
+    bullets: ["Pin clustering", "Pan & zoom", "Quick overview of movement", "My Location view", "Switch map style button"]
+  },
+  {
+    src: apppic8,
+    title: "Map View — Satellite in full scree mode",
+    caption: "Switch to satellite imagery for more context.",
+    bullets: ["Terrain details", "Landmarks visible", "Same pins, richer view", "My Location view", "Switch map style button"]
+  },
+  {
+    src: apppic6,
+    title: "Location Details",
+    caption: "Open precise directions or share instantly or toggle between locations",
+    bullets: ["Exact date & time", "Requester type", "Open in Google Maps (Driving Mode)", "Share location"]
+  },
+  {
+    src: apppic5,
+    title: "Filter Records",
+    caption: "Narrow results to what matters now.",
+    bullets: ["Date & time range", "Requester filter", "Ascending / descending order"]
+  },
+  {
+    src: apppic3,
+    title: "Export Single Entry",
+    caption: " Download or share just one location record.",
+    bullets: ["Choose format per item", "Lightweight, focused export", "Quick share to your contacts to get to the visually impaired"]
+  },
+  {
+    src: apppic4,
+    title: "Export Options",
+    caption: "Take the data with you in the format you prefer.",
+    bullets: ["Excel (.xlsx)", "PDF (.pdf)", "Text file (.txt)", "Text message"]
+
+  },
+  {
+    src: apppic1,
+    title: "Offline Message",
+    caption: "Get a clear notice when you try to request a location and Li-Stick was offline.",
+    bullets: ["Explains the issue", "Prompts to try again when online"]
+  }
 ];
 
 const featuresGridVariants = {
@@ -221,8 +302,8 @@ const FeaturesPage: React.FC = () => {
         <div className="relative z-10">
           {/* Heading */}
           <div className="text-center mb-12">
-            <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-r from-blue-500 to-teal-500 rounded-2xl mb-6">
-              <Target className="w-6 h-6 text-white" />
+            <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-2xl mb-6">
+              <Zap className="w-6 h-6 text-white" />
             </div>
             <h2 className="text-5xl md:text-6xl font-black mb-6 bg-gradient-to-r from-gray-900 via-blue-800 to-teal-800 bg-clip-text text-transparent">
               Watch the Li-Stick Demo
@@ -267,31 +348,32 @@ const FeaturesPage: React.FC = () => {
       </Section>
 
 
-      {/* App Screenshots Slider TO DO ADD FEATURES OF THE APP WITH PICTURES */}
-      <Section id="app-gallery" className="py-16 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
-        {/* Heading (matches your 'Feature Highlights' style) */}
+      {/* App Screenshots Slider */}
+      <Section
+        id="app-gallery"
+        className="col-span-full py-16 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50"
+      >
+        {/* Heading */}
         <div className="text-center mb-16">
           <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl mb-6">
-            <Zap className="w-6 h-6 text-white" />
+            <Smartphone className="w-6 h-6 text-white" />
           </div>
-          <h2 className="text-5xl md:text-6xl font-black mb-6 text-gray-900">
-            Mobile App
-          </h2>
+          <h2 className="text-5xl md:text-6xl font-black mb-6 text-gray-900">Mobile App</h2>
           <p className="text-xl md:text-2xl text-gray-600 max-w-4xl mx-auto font-light">
-            Explore the Li-Stick companion app—clean UI, fast pairing, and real-time safety features.
+            Explore the Li-Stick companion app—clean UI, fast pairing, and real-time safety.
           </p>
         </div>
 
-        <div className="max-w-4xl mx-auto">
-          <GallerySlider
-            items={APP_SHOTS}
-            interval={4000}
-            autoPlay={true}              // initial state (on)
-            pauseOnHover={true}
-            showAutoPlayToggle={true}    // shows the button (default true)
-          />
-        </div>
+        <SplitFeatureSlider
+          items={ITEMS}
+          interval={4000}
+          autoPlay
+          pauseOnHover
+          showAutoPlayToggle
+          className="max-w-6xl"
+        />
       </Section>
+
 
 
       {/* Mobile App Demo */}
@@ -304,7 +386,7 @@ const FeaturesPage: React.FC = () => {
           {/* Heading */}
           <div className="text-center mb-12">
             <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl mb-6">
-              <Zap className="w-6 h-6 text-white" />
+              <Smartphone className="w-6 h-6 text-white" />
             </div>
             <h2 className="text-5xl md:text-6xl font-black mb-6 bg-gradient-to-r from-gray-900 via-indigo-800 to-purple-800 bg-clip-text text-transparent">
               Watch the Mobile App Demo
@@ -349,7 +431,7 @@ const FeaturesPage: React.FC = () => {
         </div>
       </Section>
 
-      {/* Feature Highlights TO ADD THE REAL TABLE OF COMPETITOR*/}
+      {/* Feature Highlights*/}
       <Section
         id="why-different"
         className="py-20 bg-gradient-to-br from-[#4367B0] via-[#4F86C6] to-[#56ABD7] text-white relative overflow-hidden"
@@ -360,7 +442,7 @@ const FeaturesPage: React.FC = () => {
         {/* Header */}
         <div className="text-center mb-16 relative z-10">
           <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-2xl mb-6">
-            <Target className="w-6 h-6 text-white" />
+            <span className="text-white text-xl font-extrabold tracking-wide">VS</span>
           </div>
           <h2 className="text-5xl md:text-6xl font-black leading-relaxed mb-3 bg-gradient-to-r from-white via-blue-200 to-teal-200 bg-clip-text text-transparent">
             Why Li-Stick is Different?
@@ -371,23 +453,75 @@ const FeaturesPage: React.FC = () => {
         </div>
 
         {/* Comparison table */}
-        <div className="max-w-5xl mx-auto overflow-x-auto relative z-10">
+        <div className="max-w-6xl mx-auto overflow-x-auto relative z-10">
           <table className="w-full text-left border-separate border-spacing-y-2">
             <thead>
-              <tr className="text-sm text-white/80">
+              <tr className="text-lg text-white/80">
                 <th className="px-4 py-2 font-semibold">Feature</th>
                 <th className="px-4 py-2 font-semibold">Li-Stick</th>
-                <th className="px-4 py-2 font-semibold">Typical Smart Cane</th>
+                <th className="px-4 py-2 font-semibold">WeWALK Smart Cane 2</th>
+                <th className="px-4 py-2 font-semibold">Ray Electronic Aid</th>
+                <th className="px-4 py-2 font-semibold">Glidance (Glide)</th>
               </tr>
             </thead>
             <tbody>
               {[
-                { k: "Setup & Pairing", a: "One-tap, auto-reconnect", b: "Multi-step, flaky pairing" },
-                { k: "Alerts Clarity", a: "Balanced audio + haptics", b: "Noisy or vague beeps" },
-                { k: "Emergency Handling", a: "GPS SOS with caregiver link", b: "Limited SOS / no tracking" },
-                { k: "Connectivity", a: "Li-Fi + BT, low power", b: "Bluetooth only" },
-                { k: "Accessibility", a: "Large UI, voice, contrast", b: "Generic UI" },
-                { k: "Privacy", a: "User-controlled data sharing", b: "Opaque defaults" },
+                {
+                  k: "Connectivity",
+                  a: "Li-Fi",
+                  b: "Bluetooth only (phone app)",
+                  c: "Standalone (no GPS/app)",
+                  d: "Bluetooth + onboard compute"
+                },
+                {
+                  k: "GPS / Navigation",
+                  a: "Built-in GPS + caregiver tracking",
+                  b: "Phone/app GPS turn-by-turn",
+                  c: "No GPS",
+                  d: "Onboard AI path guidance"
+                },
+                {
+                  k: "Obstacle Detection",
+                  a: "Ultrasonic + Overhead + Buzzer alerts",
+                  b: "Ultrasonic ground + overhead (~1.5 m)",
+                  c: "Ultrasound up to ~2.8 m",
+                  d: "Vision + LIDAR + drop-off"
+                },
+                {
+                  k: "SOS button",
+                  a: "GPS SOS + caregiver link",
+                  b: "App alerts only",
+                  c: "Alerts only",
+                  d: "Safety steering + alerts"
+                },
+                {
+                  k: "Silent button",
+                  a: "Yes",
+                  b: "No",
+                  c: "No",
+                  d: "No"
+                },
+                {
+                  k: "Mobile App Integration",
+                  a: "Native caregiver app",
+                  b: "Companion navigation app",
+                  c: "None",
+                  d: "Companion setup/app"
+                },
+                {
+                  k: "Water / Puddle Detection",
+                  a: "Yes",
+                  b: "No",
+                  c: "No",
+                  d: "No (weather-resistant only)"
+                },
+                {
+                  k: "Price Range (USD)",
+                  a: "$250-300 (target)",
+                  b: "$850",
+                  c: "$300",
+                  d: "$1,499+"
+                }
               ].map((row, i) => (
                 <tr
                   key={i}
@@ -395,12 +529,26 @@ const FeaturesPage: React.FC = () => {
                 >
                   <td className="px-4 py-3 font-medium text-gray-900">{row.k}</td>
                   <td className="px-4 py-3 text-gray-800">{row.a}</td>
-                  <td className="px-4 py-3 text-gray-600">{row.b}</td>
+                  <td className="px-4 py-3 text-gray-800">{row.b}</td>
+                  <td className="px-4 py-3 text-gray-800">{row.c}</td>
+                  <td className="px-4 py-3 text-gray-800">{row.d}</td>
                 </tr>
               ))}
             </tbody>
           </table>
+
+          <div className="mt-10 flex justify-center">
+            <Link
+              to="/features"
+              className="inline-flex items-center gap-2 rounded-xl bg-gray-900 px-6 py-3 text-white transition hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+              aria-label="Explore Li-Stick features"
+            >
+              Explore future plans
+            </Link>
+          </div>
+
         </div>
+
       </Section>
 
       {/* FAQ */}

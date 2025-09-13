@@ -11,29 +11,28 @@ export type SlideItem = {
 
 type Props = {
     items: SlideItem[];
-    interval?: number;          // auto scroll interval (ms)
-    autoPlay?: boolean;         // initial autoplay state (default ON)
-    pauseOnHover?: boolean;     // pause autoplay when hovered
-    showAutoPlayToggle?: boolean; // show the toggle button
+    interval?: number;
+    autoPlay?: boolean;
+    pauseOnHover?: boolean;
+    showAutoPlayToggle?: boolean;
     className?: string;
 };
 
 const GallerySlider: React.FC<Props> = ({
     items: rawItems,
     interval = 5000,
-    autoPlay = true,             // initial default
+    autoPlay = true,
     pauseOnHover = true,
     showAutoPlayToggle = true,
     className
 }) => {
-    // Keep items stable across renders so changing parents don't recreate the array
     const itemsRef = useRef(rawItems);
     const items = itemsRef.current;
 
     const [index, setIndex] = useState(0);
     const [direction, setDirection] = useState<1 | -1>(1);
-    const [isPaused, setIsPaused] = useState(false); // hover/visibility pause
-    const [autoOn, setAutoOn] = useState<boolean>(autoPlay); // 🔁 user-toggleable autoplay
+    const [isPaused, setIsPaused] = useState(false);
+    const [autoOn, setAutoOn] = useState<boolean>(autoPlay);
 
     const count = items.length;
 
@@ -52,18 +51,14 @@ const GallerySlider: React.FC<Props> = ({
         setIndex(i);
     };
 
-    // Framer variants
     const variants = {
         enter: (dir: 1 | -1) => ({ x: dir === 1 ? 80 : -80, opacity: 0 }),
         center: { x: 0, opacity: 1 },
         exit: (dir: 1 | -1) => ({ x: dir === 1 ? -80 : 80, opacity: 0 })
     };
 
-    // Simple swipe detection
     const startX = useRef<number | null>(null);
-    const onPointerDown = (e: React.PointerEvent) => {
-        startX.current = e.clientX;
-    };
+    const onPointerDown = (e: React.PointerEvent) => { startX.current = e.clientX; };
     const onPointerUp = (e: React.PointerEvent) => {
         if (startX.current == null) return;
         const dx = e.clientX - startX.current;
@@ -73,23 +68,12 @@ const GallerySlider: React.FC<Props> = ({
 
     const current = items[index];
 
-    // 🔄 Auto-scroll (uses user toggle + hover pause)
     useEffect(() => {
         if (!autoOn || isPaused || count <= 1) return;
         const t = setInterval(() => go(1), interval);
         return () => clearInterval(t);
-        // include index so manual interaction feels like it resets the timer
     }, [autoOn, isPaused, interval, index, count]);
 
-    // ⏸️ Pause on hover (optional)
-    const hoverHandlers = pauseOnHover
-        ? {
-            onMouseEnter: () => setIsPaused(true),
-            onMouseLeave: () => setIsPaused(false),
-        }
-        : {};
-
-    // ⏸️ Pause when tab/window hidden; resume when visible
     useEffect(() => {
         const onVis = () => setIsPaused(document.hidden ? true : false);
         document.addEventListener("visibilitychange", onVis);
@@ -98,30 +82,33 @@ const GallerySlider: React.FC<Props> = ({
 
     return (
         <div className={["relative", className].filter(Boolean).join(" ")}>
-            {/* Frame */}
+            {/* Portrait phone frame */}
             <div
-                className="relative aspect-video overflow-hidden rounded-3xl shadow-2xl bg-white/80 backdrop-blur-sm border border-white/50"
+                className="relative aspect-[9/19] max-h-[80vh] overflow-hidden rounded-3xl shadow-2xl bg-slate-100 border border-white/50"
                 onPointerDown={onPointerDown}
                 onPointerUp={onPointerUp}
-                {...hoverHandlers}
+                {...(pauseOnHover
+                    ? { onMouseEnter: () => setIsPaused(true), onMouseLeave: () => setIsPaused(false) }
+                    : {})}
             >
-                <AnimatePresence custom={direction} mode="popLayout">
-                    <motion.img
-                        key={current.src} // key only on the image, not the whole slider
-                        custom={direction}
-                        variants={variants}
-                        initial="enter"
-                        animate="center"
-                        exit="exit"
-                        transition={{ duration: 0.35, ease: "easeOut" }}
-                        src={current.src}
-                        alt={current.alt ?? current.title ?? "Slide"}
-                        className="absolute inset-0 h-full w-full object-cover"
-                        draggable={false}
-                    />
-                </AnimatePresence>
+                <div className="absolute inset-0 flex items-center justify-center">
+                    <AnimatePresence custom={direction} mode="popLayout">
+                        <motion.img
+                            key={current.src}
+                            custom={direction}
+                            variants={variants}
+                            initial="enter"
+                            animate="center"
+                            exit="exit"
+                            transition={{ duration: 0.35, ease: "easeOut" }}
+                            src={current.src}
+                            alt={current.alt ?? current.title ?? "Slide"}
+                            className="max-h-full max-w-full object-contain select-none"
+                            draggable={false}
+                        />
+                    </AnimatePresence>
+                </div>
 
-                {/* 🔘 Autoplay toggle (user-facing) */}
                 {showAutoPlayToggle && (
                     <button
                         type="button"
@@ -134,19 +121,13 @@ const GallerySlider: React.FC<Props> = ({
                     </button>
                 )}
 
-                {/* Bottom gradient so text never overlays/blocks the image */}
                 {(current.title || current.caption) && (
-                    <div className="pointer-events-none absolute inset-x-0 bottom-0 p-6 sm:p-8 bg-gradient-to-t from-black/60 via-black/20 to-transparent text-white">
-                        {current.title && (
-                            <h3 className="text-lg sm:text-xl font-semibold drop-shadow">{current.title}</h3>
-                        )}
-                        {current.caption && (
-                            <p className="mt-1 text-sm sm:text-base opacity-90 drop-shadow">{current.caption}</p>
-                        )}
+                    <div className="pointer-events-none absolute inset-x-0 bottom-0 p-4 sm:p-5 bg-gradient-to-t from-black/60 via-black/20 to-transparent text-white">
+                        {current.title && <h3 className="text-base sm:text-lg font-semibold drop-shadow">{current.title}</h3>}
+                        {current.caption && <p className="mt-0.5 text-xs sm:text-sm opacity-90 drop-shadow">{current.caption}</p>}
                     </div>
                 )}
 
-                {/* Prev / Next */}
                 <button
                     type="button"
                     aria-label="Previous"
