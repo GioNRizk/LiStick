@@ -977,7 +977,7 @@ const Home: React.FC = () => {
 
                         <div className="mt-10 flex justify-center">
                             <Link
-                                to="/impact"
+                                to="/impact/#traction"
                                 className="inline-flex items-center gap-2 rounded-xl bg-gray-900 px-6 py-3 text-white transition hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
                                 aria-label="Explore Li-Stick features"
                             >
