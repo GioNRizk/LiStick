@@ -5,6 +5,9 @@ import { AnimatePresence, motion } from "framer-motion"; // Import motion and An
 import CTA from "../components/common/CTA";
 import { Leaf, Handshake, Landmark, Sparkles, Quote, Award, ExternalLink } from "lucide-react";
 import { ChevronLeft, ChevronRight, Play, Pause } from "lucide-react";
+// src/pages/Impact.tsx
+import BackToTop from "../components/ui/BackToTop";
+
 
 
 // SDG images (place files in src/assets/images/sdgs/)
@@ -700,6 +703,8 @@ const ImpactPage: React.FC = () => {
       />
 
       <Footer />
+      <BackToTop />
+
     </div>
   );
 };
