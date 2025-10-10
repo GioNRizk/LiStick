@@ -123,8 +123,10 @@ const Header: React.FC = () => {
               <button
                 key={link.name}
                 onClick={() => {
-                  navigate(link.href);
+                  // Close menu and scroll to top instantly when navigating
                   setIsMenuOpen(false);
+                  navigate(link.href);
+                  window.scrollTo(0, 0);
                 }}
                 className="w-full rounded-lg py-3 text-center text-lg font-medium text-gray-700 transition-all duration-300 hover:bg-gray-100 hover:text-blue-600"
                 style={{ animationDelay: `${index * 100 + 200}ms` }}
@@ -135,6 +137,7 @@ const Header: React.FC = () => {
           </nav>
         </div>
       </div>
+
     </>
   );
 };

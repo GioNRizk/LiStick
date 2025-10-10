@@ -1,49 +1,49 @@
-// src/components/features/Hero.tsx
 import Section from "../ui/Section";
-import { ShieldCheck, ChevronDown } from "lucide-react";
-import ClickSplash from "../ui/ClickSplash";
+import { ShieldCheck } from "lucide-react";
 import { motion, useMotionValue, useTransform } from "framer-motion";
+import ClickSplash from "../ui/ClickSplash";
 
 type Props = {
     badge?: React.ReactNode;
     title: React.ReactNode;
     highlight?: string;
-    rotatingWords?: React.ReactNode; // 👈 CHANGED: ReactNode (not string[])
+    rotatingWords?: React.ReactNode;
     subtitle?: React.ReactNode;
     ctaLabel?: string;
     ctaHref?: string;
     showScrollHint?: boolean;
-    scrollTargetId?: string;           // NEW
+    scrollTargetId?: string;
 };
 
 const Hero: React.FC<Props> = ({
     badge,
     title,
-    highlight,
-    rotatingWords,
+    highlight, 
+    rotatingWords, 
     subtitle,
     ctaLabel,
     ctaHref,
     showScrollHint,
     scrollTargetId,
 }) => {
-    // 🔹 Parallax motion values (hooks must be inside the component)
+    // Parallax motion background
     const mx = useMotionValue(0);
     const my = useMotionValue(0);
-    const bgX = useTransform(mx, (v) => v * 12); // ±12px drift
-    const bgY = useTransform(my, (v) => v * 12);
+    const bgX = useTransform(mx, (v: number) => v * 12);
+    const bgY = useTransform(my, (v: number) => v * 12);
 
     const onMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
         const r = (e.currentTarget as HTMLElement).getBoundingClientRect();
-        const px = ((e.clientX - r.left) / r.width - 0.5) * 2;  // -1..1
-        const py = ((e.clientY - r.top) / r.height - 0.5) * 2;  // -1..1
+        const px = ((e.clientX - r.left) / r.width - 0.5) * 2;
+        const py = ((e.clientY - r.top) / r.height - 0.5) * 2;
         mx.set(px);
         my.set(py);
     };
+
     return (
         <Section
-            onMouseMove={onMouseMove}   // if your Section forwards props; otherwise put this on the inner motion.div
-            className="relative min-h-screen flex items-center justify-center bg-gradient-to-b from-slate-950 via-gray-900 to-black text-white"
+            onMouseMove={onMouseMove}
+            className="relative min-h-screen flex items-center justify-center bg-gradient-to-b from-slate-950 via-gray-900 to-black text-white overflow-hidden"
             container={false}
         >
             {/* Animated background layers */}
@@ -51,8 +51,7 @@ const Hero: React.FC<Props> = ({
             <div aria-hidden className="hero-light-sweep" />
             <div aria-hidden className="hero-vignette" />
 
-        <ClickSplash />
-
+            <ClickSplash />
 
             <motion.div
                 onMouseMove={onMouseMove}
@@ -65,20 +64,15 @@ const Hero: React.FC<Props> = ({
                 {badge && (
                     <div className="mb-5 flex justify-center">
                         {typeof badge === "string" ? (
-                            // Text pill (unchanged behavior)
                             <div className="inline-flex items-center gap-3 rounded-full bg-white/10 px-4 py-2 backdrop-blur">
                                 <ShieldCheck className="h-5 w-5 text-teal-300" />
                                 <span className="text-sm text-white/80">{badge}</span>
                             </div>
                         ) : (
-                            // Icon-only (no background)
-                            <div className="inline-flex items-center justify-center">
-                                {badge}
-                            </div>
+                            <div className="inline-flex items-center justify-center">{badge}</div>
                         )}
                     </div>
                 )}
-
 
                 {/* Main headline */}
                 <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black mb-4">
@@ -90,17 +84,12 @@ const Hero: React.FC<Props> = ({
                     )}
                 </h1>
 
-                {/* 🔄 Rotating tagline passed from the page */}
+                {/* Rotating tagline */}
                 {rotatingWords && (
-                    <div className="mt-6 mb-6">
-                        <div className="min-h-[2.75rem] sm:min-h-[3.25rem] md:min-h-[3.75rem] flex items-center justify-center">
-                            {rotatingWords}
-                        </div>
+                    <div className="mt-6 mb-6 min-h-[2.75rem] sm:min-h-[3.25rem] md:min-h-[3.75rem] flex items-center justify-center">
+                        {rotatingWords}
                     </div>
                 )}
-
-
-
 
                 {/* Subtitle */}
                 {subtitle && (
@@ -120,19 +109,43 @@ const Hero: React.FC<Props> = ({
                 )}
             </motion.div>
 
-            {/* Scroll hint */}
-            {showScrollHint && (
-                <a
-                    href={`#${scrollTargetId ?? "problem"}`}
+            {/* ✨ Smooth Scroll Hint */}
+            {showScrollHint && scrollTargetId && (
+                <motion.a
+                    href={`#${scrollTargetId}`}
                     aria-label="Scroll to next section"
-                    className="absolute bottom-6 left-1/2 -translate-x-1/2 animate-bounce group"
+                    className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center group"
+                    animate={{ y: [0, -6, 0] }}
+                    transition={{ repeat: Infinity, duration: 1.8, ease: "easeInOut" }}
                 >
-                    <ChevronDown className="w-6 h-6 text-white/70 group-hover:text-white" />
-                    <span className="sr-only">Scroll to section</span>
-                </a>
+                    <motion.div
+                        className="rounded-full p-3 bg-white/10 backdrop-blur-sm ring-1 ring-white/10 group-hover:bg-white/20 group-hover:ring-white/20 transition-all"
+                        animate={{
+                            boxShadow: [
+                                "0 0 0px rgba(0,255,255,0)",
+                                "0 0 16px rgba(0,255,255,0.4)",
+                                "0 0 0px rgba(0,255,255,0)",
+                            ],
+                        }}
+                        transition={{
+                            duration: 2,
+                            repeat: Infinity,
+                            ease: "easeInOut",
+                        }}
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="w-6 h-6 text-teal-400 group-hover:text-white transition-colors"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            strokeWidth={2}
+                        >
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </motion.div>
+                </motion.a>
             )}
-
-
         </Section>
     );
 };

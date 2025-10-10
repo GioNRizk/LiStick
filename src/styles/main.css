@@ -116,3 +116,32 @@
         radial-gradient(80% 65% at 50% 55%, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, .6) 100%);
     animation: vignette-pulse 8s ease-in-out infinite;
 }
+
+
+select,
+option {
+    font-family: "Twemoji Country Flags", "Noto Color Emoji", "Apple Color Emoji", "Segoe UI Emoji", system-ui, sans-serif !important;
+}
+
+
+/* ---------------------------------------------------
+   HYBRID SCROLL BEHAVIOR
+   - Instant scroll on route changes
+   - Smooth scroll ONLY for in-page anchor jumps (#...)
+--------------------------------------------------- */
+
+/* Default: instant */
+html {
+    scroll-behavior: auto !important;
+}
+
+/* When clicking internal anchors (like #contact, #features, etc.) */
+html:has(a[href^="#"]:focus),
+html:has(a[href^="#"]:active),
+html:has(a[href^="#"]:hover) {
+    scroll-behavior: smooth !important;
+}
+/* Optional: make manual JS calls smooth (like scrollIntoView) */
+.scroll-smooth-element {
+    scroll-behavior: smooth;
+}

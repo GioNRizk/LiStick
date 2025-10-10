@@ -1,6 +1,7 @@
 // src/App.tsx
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Header from "./components/common/Header";
+import ScrollToTop from "./components/common/ScrollToTop";
 
 // Pages
 import HomePage from "./pages/home";
@@ -11,22 +12,17 @@ import FuturePlansPage from "./pages/futureplans";
 
 const App: React.FC = () => (
   <Router>
+    <ScrollToTop /> {/* ensures INSTANT scroll to top on route changes */}
     <Header />
-    <main>
+    {/* If your app uses a scrolling container, keep data-scroll-root */}
+    <main data-scroll-root>
       <Routes>
-        {/* Home is now "/" */}
         <Route path="/" element={<HomePage />} />
-
-        {/* Core pages */}
         <Route path="/about" element={<About />} />
         <Route path="/features" element={<FeaturesPage />} />
         <Route path="/impact" element={<ImpactPage />} />
         <Route path="/future" element={<FuturePlansPage />} />
-
-        {/* Contact is now part of About → jump to #contact */}
         <Route path="/contact" element={<Navigate to="/about#contact" replace />} />
-
-        {/* Fallback to Home */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </main>

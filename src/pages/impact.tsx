@@ -129,7 +129,9 @@ const CompetitionCard: React.FC<{
 
   // Auto-rotate images every 2.5s (only if >1 image)
   React.useEffect(() => {
-    if (!hasCarousel) return;
+    if (!hasCarousel) {
+      return;
+    }
     const t = setInterval(() => {
       setIdx((i) => (i + 1) % images.length);
     }, 2500);
@@ -255,9 +257,13 @@ const CommunityCollaboration: React.FC<{ items: CarouselItem[] }> = ({ items }) 
   const [itemsPerView, setItemsPerView] = React.useState(1);
   React.useEffect(() => {
     const calc = () => {
-      if (window.innerWidth >= 1024) setItemsPerView(3);      // lg+
-      else if (window.innerWidth >= 768) setItemsPerView(2); // md
-      else setItemsPerView(1);                               // sm
+      if (window.innerWidth >= 1024) {
+        setItemsPerView(3);
+      } else if (window.innerWidth >= 768) {
+               setItemsPerView(2);
+             } else {
+               setItemsPerView(1);
+             }                               // sm
     };
     calc();
     window.addEventListener("resize", calc);
@@ -288,7 +294,9 @@ const CommunityCollaboration: React.FC<{ items: CarouselItem[] }> = ({ items }) 
   const [transitionMs] = React.useState(900); // increase for slower slide
 
   React.useEffect(() => {
-    if (!autoPlay || totalPages <= 1) return;
+    if (!autoPlay || totalPages <= 1) {
+      return;
+    }
     const id = setInterval(() => setPage((p) => (p + 1) % totalPages), intervalMs);
     return () => clearInterval(id);
   }, [autoPlay, intervalMs, totalPages]);

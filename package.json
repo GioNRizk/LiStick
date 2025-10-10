@@ -12,13 +12,16 @@
   "dependencies": {
     "@tailwindcss/postcss": "^4.1.11",
     "@tailwindcss/vite": "^4.1.11",
-    "framer-motion": "^12.23.12",
+    "country-codes-list": "^2.0.0",
+    "firebase": "^12.4.0",
+    "framer-motion": "^12.23.22",
     "lucide": "^0.536.0",
     "lucide-react": "^0.536.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-icons": "^5.5.0",
     "react-intersection-observer": "^9.16.0",
+    "react-phone-input-2": "^2.15.1",
     "react-router-dom": "^7.7.1",
     "styled-components": "^6.1.19"
   },

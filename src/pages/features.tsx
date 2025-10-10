@@ -214,7 +214,7 @@ const FeaturesPage: React.FC = () => {
     }, 3000); // Change title every 3 seconds
 
     return () => clearInterval(interval);
-  }, []);
+  }, [dynamicTitles.length]);
 
   return (
 
