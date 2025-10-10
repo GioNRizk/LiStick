@@ -1,6 +1,6 @@
 import React from "react";
 import Section from "../ui/Section";
-import { motion, useInView, type Variants } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 
 export type RoadmapItem = {
   title: string;
@@ -19,7 +19,7 @@ const RoadmapEntry: React.FC<{ item: RoadmapItem; isLeft: boolean }> = ({ item, 
   const ref = React.useRef<HTMLLIElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-20% 0px" });
 
-  const variants: Variants = {
+  const variants = {
     hidden: { opacity: 0, x: isLeft ? -50 : 50 },
     visible: {
       opacity: 1,
@@ -27,6 +27,7 @@ const RoadmapEntry: React.FC<{ item: RoadmapItem; isLeft: boolean }> = ({ item, 
       transition: { duration: 0.6, ease: "easeOut" },
     },
   };
+
 
   return (
     <li ref={ref} className="relative mb-10">
@@ -64,7 +65,11 @@ const RoadmapEntry: React.FC<{ item: RoadmapItem; isLeft: boolean }> = ({ item, 
           <div className="relative">
             <div className="absolute inset-0 bg-blue-500 rounded-full blur-sm opacity-60" />
             <div className="relative h-10 w-10 shrink-0 rounded-2xl bg-gradient-to-br from-blue-500 to-teal-500 shadow-md flex items-center justify-center">
-              {item.icon && React.isValidElement(item.icon) && React.cloneElement(item.icon, { className: "h-6 w-6 text-white" })}
+              {item.icon &&
+                React.isValidElement(item.icon) &&
+                React.cloneElement(item.icon as React.ReactElement<{ className?: string }>, {
+                  className: "h-6 w-6 text-white",
+                })}
             </div>
           </div>
         </div>
@@ -74,7 +79,11 @@ const RoadmapEntry: React.FC<{ item: RoadmapItem; isLeft: boolean }> = ({ item, 
           <div className="relative">
             <div className="absolute inset-0 bg-blue-500 rounded-full blur-sm opacity-50" />
             <div className="relative h-10 w-10 rounded-2xl bg-gradient-to-br from-blue-500 to-teal-500 shadow-md flex items-center justify-center">
-              {item.icon && React.isValidElement(item.icon) && React.cloneElement(item.icon, { className: "h-6 w-6 text-white" })}
+              {item.icon &&
+                React.isValidElement(item.icon) &&
+                React.cloneElement(item.icon as React.ReactElement<{ className?: string }>, {
+                  className: "h-6 w-6 text-white",
+                })}
             </div>
           </div>
         </div>

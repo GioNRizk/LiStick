@@ -27,17 +27,19 @@ const NumberCounter: React.FC<{
     start: boolean;
 }> = ({ value, duration = 1.2, decimals = 0, prefix = "", suffix = "", start }) => {
     const mv = useMotionValue(0);
-    const formatted = useTransform(mv, (v) =>
+    const formatted = useTransform(mv, (v: number) =>
         `${prefix}${Number(v).toLocaleString(undefined, {
             minimumFractionDigits: decimals,
             maximumFractionDigits: decimals,
         })}`
     );
     useEffect(() => {
-        if (!start) return;
+        if (!start) {
+          return;
+        }
         const ctrl = animate(mv, value, { duration, ease: "easeOut" });
         return () => ctrl.stop();
-    }, [start, value, duration]);
+    }, [start, value, duration, mv]);
     return (
         <>
             <motion.span>{formatted}</motion.span>
