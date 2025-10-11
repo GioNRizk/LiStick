@@ -8,7 +8,7 @@ import {
     Linkedin, Instagram, Youtube
 } from "lucide-react";
 import logo from "../../assets/images/Li-stick icon.png"; // adjust path if needed
-import { db } from "../../../firebaseConfig";
+import { db } from "../../firebaseConfig";
 import { doc, serverTimestamp, setDoc, getDoc } from "firebase/firestore";
 
 const nav = {

@@ -2,6 +2,8 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Header from "./components/common/Header";
 import ScrollToTop from "./components/common/ScrollToTop";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/react"; // ✅ function import
 
 // Pages
 import HomePage from "./pages/home";
@@ -12,9 +14,8 @@ import FuturePlansPage from "./pages/futureplans";
 
 const App: React.FC = () => (
   <Router>
-    <ScrollToTop /> {/* ensures INSTANT scroll to top on route changes */}
+    <ScrollToTop />
     <Header />
-    {/* If your app uses a scrolling container, keep data-scroll-root */}
     <main data-scroll-root>
       <Routes>
         <Route path="/" element={<HomePage />} />
@@ -26,6 +27,14 @@ const App: React.FC = () => (
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </main>
+
+    {/* ✅ Run analytics + speed insights only in production */}
+    {import.meta.env.MODE === "production" && (
+      <>
+        <Analytics />
+        {SpeedInsights({})} {/* ✅ TypeScript-safe call */}
+      </>
+    )}
   </Router>
 );
 

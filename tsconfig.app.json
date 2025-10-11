@@ -27,6 +27,6 @@
   },
   "include": [
     "src",
-    "firebaseConfig.ts"
+    "src/firebaseConfig.ts"
   ]
 }

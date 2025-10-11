@@ -37,7 +37,7 @@ import "react-phone-input-2/lib/style.css";
 import PhoneInput from "react-phone-input-2";
 import { useLocation } from "react-router-dom";
 
-import { db } from "../../firebaseConfig";
+import { db } from "../firebaseConfig";
 import { collection, serverTimestamp } from "firebase/firestore";
 import { doc, setDoc, getDocs } from "firebase/firestore";
 
