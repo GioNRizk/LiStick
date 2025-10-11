@@ -1,3 +1,6 @@
+/* The above code is a TypeScript React component for a Contact Page of a website. It includes sections
+for Hero, Our Story, Team Members, Partners & Supporters, Contact Details, Follow Us, Press & Media,
+and a Contact Form. */
 import React from "react";
 import Hero from "../components/features/Hero";
 import Section from "../components/ui/Section";
@@ -32,8 +35,9 @@ import ttoLogo from "../assets/images/partners/Usek TTO logo .png";
 import usekLogo from "../assets/images/partners/usek-logo-new.png";
 import "react-phone-input-2/lib/style.css";
 import PhoneInput from "react-phone-input-2";
+import { useLocation } from "react-router-dom";
 
-import { db } from "../firebaseConfig";
+import { db } from "../../firebaseConfig";
 import { collection, serverTimestamp } from "firebase/firestore";
 import { doc, setDoc, getDocs } from "firebase/firestore";
 
@@ -118,6 +122,21 @@ const ContactPage: React.FC = () => {
     return () => clearInterval(timer);
   }, [submitted]);
 
+  // Smooth-scroll to #hash targets (e.g., /about#contact)
+  const location = useLocation();
+  useEffect(() => {
+    // run on mount & whenever hash changes
+    if (location.hash) {
+      const el = document.querySelector(location.hash);
+      if (el) {
+        // if you have a fixed header, adjust with scrollMarginTop via CSS:
+        // #contact { scroll-margin-top: 96px; }
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+  }, [location.hash]);
+
+
   return (
     <div className="bg-white text-gray-800 overflow-x-hidden">
       {/* HERO */}
@@ -150,7 +169,7 @@ const ContactPage: React.FC = () => {
           </p>
         }
         showScrollHint
-        scrollTargetId="contact"
+        scrollTargetId="story"
       />
 
       {/* OUR STORY */}

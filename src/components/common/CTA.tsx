@@ -1,3 +1,18 @@
+/**
+ * The above TypeScript React code defines a functional component called CTA (Call to Action) that
+ * displays a title, subtitle, and primary/secondary action buttons in a styled section.
+ * @property {string} title - The `title` property in the CTA component represents the main heading or
+ * title of the Call to Action section. It is a required property and must be a string value. This
+ * title is typically displayed prominently at the top of the CTA section to grab the user's attention
+ * and convey the main message
+ * @property {string} subtitle - The `subtitle` property in the `CTA` component is a string that
+ * represents an optional additional text displayed below the main title. It provides further context
+ * or information related to the call-to-action being presented on the component.
+ * @property primary - The `primary` property in the CTA component represents the primary
+ * call-to-action button or link that can be displayed. It includes the following attributes:
+ * @property secondary - The `secondary` property in the CTA component is an optional object that can
+ * have the following properties:
+ */
 // src/components/common/CTA.tsx
 import React from "react";
 import Section from "../ui/Section";

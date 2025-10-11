@@ -1,3 +1,5 @@
+/* The above code is a TypeScript React component that represents a page for showcasing future plans
+for a project called LiStick. Here is a breakdown of what the code is doing: */
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Hero from "../components/features/Hero";
