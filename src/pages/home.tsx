@@ -22,7 +22,7 @@ import liIcon from "../assets/images/Li-stick icon.png";
 // team photos
 import gioImg from "../assets/images/team_pic/gio.jpg";
 import marcImg from "../assets/images/team_pic/marc.jpg";
-import rimaImg from "../assets/images/team_pic/teamli.jpg"; // Rima photo (we crop via CSS)
+import jennyImg from "../assets/images/team_pic/jenny.png";
 
 // ADD your images (replace with your real paths)
 import uec1 from "../assets/images/awards/uec1.jpg";
@@ -163,26 +163,29 @@ const ImpactStatTile: React.FC<{
 const MotionLink = motion(Link);
 
 const teamMembers = [
+{
+        name: "Marc Salameh",
+        role: "Co-Founder, Hardware & Systems",
+        image: marcImg,
+        subtitle: "Computer Engineer - Functional Consultant",
+        cropStyle: "object-center",
+        linkedin: "#",
+    },
     {
         name: "Gio Rizk",
-        role: "Li-Stick Co-Founder",
-        subtitle: "Head of Li-Stick Software Department",
+        role: "Co-Founder, Software Lead",
         image: gioImg,
+        subtitle: "Head of Li-Stick Software Department",
         cropStyle: "object-center",
+        linkedin: "#",
     },
     {
-        name: "Marc Salameh",
-        role: "Li-Stick Co-Founder",
-        subtitle: "Computer Engineer - Functional Consultant",
-        image: marcImg,
+        name: "Jenny Attieh",
+        role: "Co-Founder, Telecom & Li-Fi",
+        image: jennyImg,
+        subtitle: "Telecommunication Engineer",
         cropStyle: "object-center",
-    },
-    {
-        name: "Rima Mghames",
-        role: "Li-Stick Co-Founder",
-        subtitle: "Head of Li-Stick Health Department",
-        image: rimaImg,
-        cropStyle: "object-[center_15%] scale-150", // Focus on center person, zoom in
+        linkedin: "#",
     },
 ];
 
@@ -317,7 +320,7 @@ const Home: React.FC = () => {
         }, 3000); // Change title every 3 seconds
 
         return () => clearInterval(interval);
-    }, []);
+    }, [dynamicTitles.length]);
 
     return (
         <div className="bg-white text-gray-800 overflow-x-hidden">

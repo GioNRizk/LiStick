@@ -27,6 +27,7 @@ import BackToTop from "../components/ui/BackToTop";
 import gioImg from "../assets/images/team_pic/gio.jpg";
 import marcImg from "../assets/images/team_pic/marc.jpg";
 import rimaImg from "../assets/images/team_pic/teamli.jpg";
+import jennyImg from "../assets/images/team_pic/jenny.png";
 
 // Partner logos
 import usekSoeLogo from "../assets/images/partners/Usek SOE logo.jpg";
@@ -44,10 +45,26 @@ import { doc, setDoc, getDocs } from "firebase/firestore";
 /* ----------------------------- team members ----------------------------- */
 const teamMembers = [
   {
+    name: "Marc Salameh",
+    role: "Co-Founder, Hardware & Systems",
+    image: marcImg,
+    subtitle: "Computer Engineer - Functional Consultant",
+    cropStyle: "object-center",
+    linkedin: "#",
+  },
+  {
     name: "Gio Rizk",
     role: "Co-Founder, Software Lead",
     image: gioImg,
     subtitle: "Head of Li-Stick Software Department",
+    cropStyle: "object-center",
+    linkedin: "#",
+  },
+  {
+    name: "Jenny Attieh",
+    role: "Co-Founder, Telecom & Li-Fi",
+    image: jennyImg,
+    subtitle: "Head of Telecommunication Department",
     cropStyle: "object-center",
     linkedin: "#",
   },
@@ -58,15 +75,7 @@ const teamMembers = [
     subtitle: "Head of Li-Stick Health Department",
     cropStyle: "object-[center_15%] scale-150",
     linkedin: "#",
-  },
-  {
-    name: "Marc Salameh",
-    role: "Co-Founder, Hardware & Systems",
-    image: marcImg,
-    subtitle: "Computer Engineer - Functional Consultant",
-    cropStyle: "object-center",
-    linkedin: "#",
-  },
+  }
 ];
 
 /* ------------------------------ animations ------------------------------ */
