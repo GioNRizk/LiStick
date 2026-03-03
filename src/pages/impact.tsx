@@ -32,11 +32,11 @@ import yce3 from "../assets/images/awards/yce3.jpg";
 
 // Metz (6 pics)
 import metz1 from "../assets/images/traction/metz1.png";
-import metz2 from "../assets/images/traction/metz2.jpg";
-import metz3 from "../assets/images/traction/metz3.jpg";
-import metz4 from "../assets/images/traction/metz4.jpg";
-import metz5 from "../assets/images/traction/metz5.jpg";
-import metz6 from "../assets/images/traction/metz6.jpg";
+import metz2 from "../assets/images/traction/metz2.png"
+import metz3 from "../assets/images/traction/metz3.png";
+import metz4 from "../assets/images/traction/metz4.png";
+import metz5 from "../assets/images/traction/metz5.png";
+import metz6 from "../assets/images/traction/metz6.png";
 
 // USPTO
 import uspto1 from "../assets/images/traction/uspto1.webp";
