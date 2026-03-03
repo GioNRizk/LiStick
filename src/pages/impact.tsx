@@ -422,6 +422,109 @@ const ImpactPage: React.FC = () => {
     []
   );
 
+  // ---- Traction Carousel State ----
+  const [itemsPerView, setItemsPerView] = React.useState(1);
+  const [page, setPage] = React.useState(0);
+
+  React.useEffect(() => {
+    const calc = () => {
+      if (window.innerWidth >= 1280) setItemsPerView(3);
+      else if (window.innerWidth >= 768) setItemsPerView(2);
+      else setItemsPerView(1);
+    };
+    calc();
+    window.addEventListener("resize", calc);
+    return () => window.removeEventListener("resize", calc);
+  }, []);
+
+  const tractionCards = React.useMemo(() => [
+    <CompetitionCard
+      key="uec"
+      title="UEC25 — USEK Entrepreneurship Challenge"
+      subtitle="#1 — Winners - March 5th 2025"
+      images={[uec1, uec2, uec3]}
+      accentFrom="from-blue-500"
+      accentTo="to-indigo-500"
+      bullets={[
+        "1st place across 10+ teams",
+        "Judged by USEK Instructors + Babson faculty",
+        "Trip to Babson Build in USA",
+        "Seed perks + campus visibility",
+      ]}
+      mediaFit="contain"
+    />,
+    <CompetitionCard
+      key="yce"
+      title="YCE25 — Youth Competition Entrepreneur"
+      subtitle="#1 — Winners - April 30th 2025"
+      images={[yce1, yce2, yce3]}
+      accentFrom="from-teal-500"
+      accentTo="to-emerald-500"
+      bullets={[
+        "1st place across 30+ teams",
+        "Judged by USEK, NDU and LAU Instructors + Industry Experts",
+        "Cash award of 1000$ + media coverage",
+        "Trip to Ville de Metz in France",
+      ]}
+      mediaFit="contain"
+    />,
+    <CompetitionCard
+      key="proto"
+      title="Prototype V1 Validation"
+      subtitle="Field-tested with NGO - July 24th 2025"
+      images={[proto1, proto2, proto3]}
+      accentFrom="from-fuchsia-500"
+      accentTo="to-pink-500"
+      bullets={[
+        "12 end-user trials with 'Blind with Vision' NGO",
+        "Validated GPS tracking, emergency alerts, caregiver app and obstacle detection",
+        "Ergonomics + UX iterations from real-world feedback",
+      ]}
+      mediaFit="contain"
+    />,
+    <CompetitionCard
+      key="metz"
+      title="Metz, France — Winner Trip"
+      subtitle="International exposure trip — November 2025"
+      images={[metz1, metz2, metz3, metz4, metz5, metz6]}
+      accentFrom="from-sky-500"
+      accentTo="to-blue-700"
+      bullets={[
+        "Official winners trip to Ville de Metz (France)",
+        "Startup exposure + ecosystem networking",
+        "Pitch refinement + international visibility",
+      ]}
+      mediaFit="contain"
+    />,
+    <CompetitionCard
+      key="uspto"
+      title="USPTO — US Patent Filing"
+      subtitle="Patent filing submitted — December 2025"
+      images={[uspto1]}
+      accentFrom="from-amber-500"
+      accentTo="to-orange-600"
+      bullets={[
+        "US patent filing submitted to USPTO with USEK TTO",
+        "Protecting Li-Stick core tech + caregiver ecosystem",
+        "Strengthening defensibility for partners and investors",
+      ]}
+      mediaFit="contain"
+    />,
+  ], []);
+
+  const tractionPages = React.useMemo(() => {
+    const chunks: React.ReactNode[][] = [];
+    for (let i = 0; i < tractionCards.length; i += itemsPerView) {
+      chunks.push(tractionCards.slice(i, i + itemsPerView));
+    }
+    return chunks;
+  }, [tractionCards, itemsPerView]);
+
+  const totalPages = tractionPages.length;
+
+  const goPrev = () => setPage((p) => (p - 1 + totalPages) % totalPages);
+  const goNext = () => setPage((p) => (p + 1) % totalPages);
+
   return (
     <div className="bg-white text-gray-800 overflow-x-hidden">
       {/* HERO */}
@@ -532,181 +635,72 @@ const ImpactPage: React.FC = () => {
           </Reveal>
 
           {/* ✅ CARD CAROUSEL */}
-          {(() => {
-            // 1 / 2 / 3 cards per view based on screen width
-            const [itemsPerView, setItemsPerView] = React.useState(1);
-            React.useEffect(() => {
-              const calc = () => {
-                if (window.innerWidth >= 1280) setItemsPerView(3); // xl
-                else if (window.innerWidth >= 768) setItemsPerView(2); // md
-                else setItemsPerView(1); // sm
-              };
-              calc();
-              window.addEventListener("resize", calc);
-              return () => window.removeEventListener("resize", calc);
-            }, []);
+          <div className="relative">
+            <div className="overflow-hidden rounded-2xl">
 
-            const cards = [
-              <CompetitionCard
-                key="uec"
-                title="UEC25 — USEK Entrepreneurship Challenge"
-                subtitle="#1 — Winners - March 5th 2025"
-                images={[uec1, uec2, uec3]}
-                accentFrom="from-blue-500"
-                accentTo="to-indigo-500"
-                bullets={[
-                  "1st place across 10+ teams",
-                  "Judged by USEK Instructors + Babson faculty",
-                  "Trip to Babson Build in USA",
-                  "Seed perks + campus visibility",
-                ]}
-                mediaFit="contain"
-              />,
-              <CompetitionCard
-                key="yce"
-                title="YCE25 — Youth Competition Entrepreneur"
-                subtitle="#1 — Winners - April 30th 2025"
-                images={[yce1, yce2, yce3]}
-                accentFrom="from-teal-500"
-                accentTo="to-emerald-500"
-                bullets={[
-                  "1st place across 30+ teams",
-                  "Judged by USEK, NDU and LAU Instructors + Industry Experts",
-                  "Cash award of 1000$ + media coverage",
-                  "Trip to Ville de Metz in France",
-                ]}
-                mediaFit="contain"
-              />,
-              <CompetitionCard
-                key="proto"
-                title="Prototype V1 Validation"
-                subtitle="Field-tested with NGO - July 24th 2025"
-                images={[proto1, proto2, proto3]}
-                accentFrom="from-fuchsia-500"
-                accentTo="to-pink-500"
-                bullets={[
-                  "12 end-user trials with 'Blind with Vision' NGO",
-                  "Validated GPS tracking, emergency alerts, caregiver app and obstacle detection",
-                  "Ergonomics + UX iterations from real-world feedback",
-                ]}
-                mediaFit="contain"
-              />,
-              <CompetitionCard
-                key="metz"
-                title="Metz, France — Winner Trip"
-                subtitle="International exposure trip — November 2025"
-                images={[metz1, metz2, metz3, metz4, metz5, metz6]}
-                accentFrom="from-sky-500"
-                accentTo="to-blue-700"
-                bullets={[
-                  "Official winners trip to Ville de Metz (France)",
-                  "Startup exposure + ecosystem networking",
-                  "Pitch refinement + international visibility",
-                ]}
-                mediaFit="contain"
-              />,
-              <CompetitionCard
-                key="uspto"
-                title="USPTO — US Patent Filing"
-                subtitle="Patent filing submitted — December 2025"
-                images={[uspto1]}
-                accentFrom="from-amber-500"
-                accentTo="to-orange-600"
-                bullets={[
-                  "US patent filing submitted to USPTO with USEK TTO",
-                  "Protecting Li-Stick core tech + caregiver ecosystem",
-                  "Strengthening defensibility for partners and investors",
-                ]}
-                mediaFit="contain"
-              />,
-            ];
-
-            // chunk into pages
-            const pages = React.useMemo(() => {
-              const chunks: React.ReactNode[][] = [];
-              for (let i = 0; i < cards.length; i += itemsPerView) {
-                chunks.push(cards.slice(i, i + itemsPerView));
-              }
-              return chunks;
-            }, [cards, itemsPerView]);
-
-            const [page, setPage] = React.useState(0);
-            const totalPages = pages.length;
-
-            const goPrev = () => setPage((p) => (p - 1 + totalPages) % totalPages);
-            const goNext = () => setPage((p) => (p + 1) % totalPages);
-
-            return (
-              <div className="relative">
-                {/* viewport */}
-                <div className="overflow-hidden rounded-2xl">
-                  {/* track */}
-                  <div
-                    className="flex"
-                    style={{
-                      transform: `translateX(-${page * 100}%)`,
-                      transition: `transform 700ms`,
-                    }}
-                  >
-                    {pages.map((group, pageIndex) => (
-                      <div key={pageIndex} className="min-w-full">
-                        <div
-                          className={`grid gap-8 ${itemsPerView === 1
-                              ? "grid-cols-1"
-                              : itemsPerView === 2
-                                ? "grid-cols-1 md:grid-cols-2"
-                                : "grid-cols-1 md:grid-cols-2 xl:grid-cols-3"
-                            }`}
-                        >
-                          {group.map((card, idx) => (
-                            <div key={idx} className="h-full">
-                              {card}
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* ✅ arrows for CARDS */}
-                <button
-                  onClick={goPrev}
-                  aria-label="Previous cards"
-                  className="hidden sm:inline-flex items-center justify-center
-                       absolute -left-6 lg:-left-8 top-1/2 -translate-y-1/2 z-10
-                       h-11 w-11 rounded-full bg-white/90 hover:bg-white
-                       shadow ring-1 ring-gray-200"
-                >
-                  <ChevronLeft className="h-5 w-5 text-gray-700" />
-                </button>
-
-                <button
-                  onClick={goNext}
-                  aria-label="Next cards"
-                  className="hidden sm:inline-flex items-center justify-center
-                       absolute -right-6 lg:-right-8 top-1/2 -translate-y-1/2 z-10
-                       h-11 w-11 rounded-full bg-white/90 hover:bg-white
-                       shadow ring-1 ring-gray-200"
-                >
-                  <ChevronRight className="h-5 w-5 text-gray-700" />
-                </button>
-
-                {/* dots */}
-                <div className="mt-6 flex items-center justify-center gap-2">
-                  {Array.from({ length: totalPages }).map((_, i) => (
-                    <button
-                      key={i}
-                      aria-label={`Traction page ${i + 1}`}
-                      onClick={() => setPage(i)}
-                      className={`h-2.5 rounded-full transition-all ${i === page ? "bg-indigo-600 w-7" : "bg-indigo-200 hover:bg-indigo-300 w-2.5"
+              {/* TRACK */}
+              <div
+                className="flex"
+                style={{
+                  transform: `translateX(-${page * 100}%)`,
+                  transition: "transform 700ms ease",
+                }}
+              >
+                {tractionPages.map((group, pageIndex) => (
+                  <div key={pageIndex} className="min-w-full">
+                    <div
+                      className={`grid gap-8 ${itemsPerView === 1
+                          ? "grid-cols-1"
+                          : itemsPerView === 2
+                            ? "grid-cols-1 md:grid-cols-2"
+                            : "grid-cols-1 md:grid-cols-2 xl:grid-cols-3"
                         }`}
-                    />
-                  ))}
-                </div>
+                    >
+                      {group.map((card, idx) => (
+                        <div key={idx} className="h-full">
+                          {card}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
               </div>
-            );
-          })()}
+
+              {/* arrows */}
+              <button
+                onClick={goPrev}
+                className="hidden sm:flex items-center justify-center
+             absolute left-[-50px] top-1/2 -translate-y-1/2
+             h-11 w-11 rounded-full bg-white shadow-lg
+             ring-1 ring-gray-200 z-20"
+              >
+                <ChevronLeft className="h-5 w-5 text-gray-700" />
+              </button>
+
+              <button
+                onClick={goNext}
+                className="hidden sm:flex items-center justify-center
+             absolute right-[-50px] top-1/2 -translate-y-1/2
+             h-11 w-11 rounded-full bg-white shadow-lg
+             ring-1 ring-gray-200 z-20"
+              >
+                <ChevronRight className="h-5 w-5 text-gray-700" />
+              </button>
+
+            </div>
+
+            {/* DOTS (outside viewport) */}
+            <div className="mt-6 flex items-center justify-center gap-2">
+              {Array.from({ length: totalPages }).map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setPage(i)}
+                  className={`h-2.5 rounded-full transition-all ${i === page ? "bg-indigo-600 w-7" : "bg-indigo-200 w-2.5"
+                    }`}
+                />
+              ))}
+            </div>
+          </div>
         </div>
       </Section>
 
