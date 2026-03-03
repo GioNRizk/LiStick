@@ -385,7 +385,17 @@ const Home: React.FC = () => {
                         <p className="text-xl sm:text-2xl font-black leading-tight">
                             “Millions face avoidable collisions from <span className="underline">undetected</span> overhead obstacles.”
                         </p>
-                        <p className="mt-2 text-sm text-white-800/80">to add link of the report claiming from canva pitch</p>
+                        <p className="mt-2 text-sm text-white-800/80">
+                            Source:{" "}
+                            <a
+                                href="https://visionatlas.iapb.org/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="font-semibold underline decoration-2 underline-offset-4 hover:text-white transition"
+                            >
+                                IEEE Study on Visual Impairment Mobility Risks
+                            </a>
+                        </p>
                     </motion.div>
 
                     {/* Animated stats */}

@@ -65,15 +65,15 @@ const ITEMS: RoadmapItem[] = [
     title: "Emergency & Safety Intelligence",
     subtitle: "Double-press SOS • Caregiver call sequence • App alert",
     desc:
-      "Improve the existing emergency button so a single press sends location alerts, while a double press automatically calls caregivers in preset order if unanswered—offering faster response during crises.",
+      "Improve the existing obstacle detection system to a smart one so that cane react as the user moves depending on sensor fusion.",
     icon: <AlertTriangle />,
     badge: "Safety",
   },
   {
-    title: "Fall & Health Monitoring",
-    subtitle: "Gyroscope + Heart-Rate sensors • Real-time alerts",
+    title: "Fall Monitoring",
+    subtitle: "Gyroscope • Real-time alerts",
     desc:
-      "Add fall detection and heart-rate monitoring using motion and biosensors. The system automatically notifies caregivers with the user’s live location and timestamp when irregularities are detected.",
+      "Add fall detection monitoring sensor. The system automatically notifies caregivers with the user’s live location and timestamp when irregularities are detected.",
     icon: <HeartPulse />,
     badge: "Health",
   },
@@ -81,7 +81,7 @@ const ITEMS: RoadmapItem[] = [
     title: "Enhanced GPS & Location Awareness",
     subtitle: "Accurate live tracking • Self-location voice mode",
     desc:
-      "Integrate a faster GPS chip and app-based live tracking. The cane announces its location at startup, and users can request a voice-spoken update anytime (‘You are in Beirut Downtown, 10:30 AM’).",
+      "Integrate a faster GPS chip and app-based live tracking. The cane will be smarter and more reliable.",
     icon: <Globe2 />,
     badge: "Navigation",
   },

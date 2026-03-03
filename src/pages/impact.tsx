@@ -1,28 +1,28 @@
 import React from "react";
 import Hero from "../components/features/Hero";
 import Section from "../components/ui/Section";
-import { AnimatePresence, motion } from "framer-motion"; // Import motion and AnimatePresence
+import { AnimatePresence, motion } from "framer-motion";
 import CTA from "../components/common/CTA";
 import { Leaf, Handshake, Landmark, Sparkles, Quote, Award, ExternalLink } from "lucide-react";
 import { ChevronLeft, ChevronRight, Play, Pause } from "lucide-react";
-// src/pages/Impact.tsx
 import BackToTop from "../components/ui/BackToTop";
 
-
-
-// SDG images (place files in src/assets/images/sdgs/)
+// SDG images
 import sdg3 from "../assets/images/sdgs/sdg3.png";
 import sdg9 from "../assets/images/sdgs/sdg9.png";
 import sdg10 from "../assets/images/sdgs/sdg10.png";
-import liIcon from "../assets/images/Li-stick icon.png"; // Import liIcon
+import liIcon from "../assets/images/Li-stick icon.png";
 import sdg11 from "../assets/images/sdgs/sdg11.png";
 import sdg17 from "../assets/images/sdgs/sdg17.png";
+
 import Footer from "../components/common/Footer";
+
+// Traction images
 import proto1 from "../assets/images/traction/proto1.jpg";
 import proto2 from "../assets/images/traction/proto2.jpg";
 import proto3 from "../assets/images/traction/proto3.jpg";
 
-// adjust these paths to your project:
+// Awards images
 import uec1 from "../assets/images/awards/uec1.jpg";
 import uec2 from "../assets/images/awards/uec2.jpg";
 import uec3 from "../assets/images/awards/uec3.jpg";
@@ -30,11 +30,25 @@ import yce1 from "../assets/images/awards/yce1.jpg";
 import yce2 from "../assets/images/awards/yce2.jpg";
 import yce3 from "../assets/images/awards/yce3.jpg";
 
+// Metz (6 pics)
+import metz1 from "../assets/images/traction/metz1.png";
+import metz2 from "../assets/images/traction/metz2.jpg";
+import metz3 from "../assets/images/traction/metz3.jpg";
+import metz4 from "../assets/images/traction/metz4.jpg";
+import metz5 from "../assets/images/traction/metz5.jpg";
+import metz6 from "../assets/images/traction/metz6.jpg";
+
+// USPTO
+import uspto1 from "../assets/images/traction/uspto1.webp";
 
 // --- Scroll reveal variants (same feel as Home) ---
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] as const } },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] as const },
+  },
 };
 
 const stagger = (staggerChildren = 0.08, delayChildren = 0.1) => ({
@@ -46,20 +60,12 @@ const stagger = (staggerChildren = 0.08, delayChildren = 0.1) => ({
 
 // Lightweight wrapper to reveal on scroll
 const Reveal: React.FC<{ className?: string; children: React.ReactNode }> = ({ className, children }) => (
-  <motion.div
-    className={className}
-    variants={fadeUp}
-    initial="hidden"
-    whileInView="show"
-    viewport={{ once: true, amount: 0.2 }}
-  >
+  <motion.div className={className} variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.2 }}>
     {children}
   </motion.div>
 );
 
-
 // ---------- Types ----------
-
 type SDG = {
   id: number;
   title: string;
@@ -74,64 +80,56 @@ type Testimonial = {
 };
 
 // ---------- Content ----------
-
 const SDGS: SDG[] = [
-  { id: 3, title: "Good Health & Well‑Being", img: sdg3, desc: "Improves safety, confidence, and daily independence." },
+  { id: 3, title: "Good Health & Well-Being", img: sdg3, desc: "Improves safety, confidence, and daily independence." },
   { id: 9, title: "Industry, Innovation & Infrastructure", img: sdg9, desc: "Accessible, resilient assistive tech built with users." },
   { id: 10, title: "Reduced Inequalities", img: sdg10, desc: "Closes mobility gaps for underserved communities." },
-  { id: 11, title: "Sustainable Cities & Communities", img: sdg11, desc: "Inclusive urban mobility and barrier‑free navigation." },
+  { id: 11, title: "Sustainable Cities & Communities", img: sdg11, desc: "Inclusive urban mobility and barrier-free navigation." },
   { id: 17, title: "Partnerships for the Goals", img: sdg17, desc: "Academia × NGOs × industry to scale impact responsibly." },
 ];
 
 const TESTIMONIALS: Testimonial[] = [
   {
-    quote:
-      "The prototype felt intuitive from the first try. Buzzer alerts helped me react quickly without overload.",
+    quote: "The prototype felt intuitive from the first try. Buzzer alerts helped me react quickly without overload.",
     author: "Early Pilot Participant",
     role: "BVI community member",
   },
   {
-    quote:
-      "This is the kind of practical innovation cities need to make accessibility real, not just aspirational.",
+    quote: "This is the kind of practical innovation cities need to make accessibility real, not just aspirational.",
     author: "Accessibility Advocate",
     role: "Urban mobility NGO",
   },
   {
-    quote:
-      "Emergency alerts and location sharing are game changers for caregiver peace of mind.",
+    quote: "Emergency alerts and location sharing are game changers for caregiver peace of mind.",
     author: "Caregiver",
     role: "Caregiver for BVI individual",
   },
   {
-    quote:
-      "The team’s dedication to user-centered design and sustainability is truly inspiring.",
+    quote: "The team’s dedication to user-centered design and sustainability is truly inspiring.",
     author: "Blind with Vision NGO",
     role: "NGO Partner director",
   },
 ];
 
-
 // ---------- UI Snippets ----------
-
 
 // Small helper component (put it in the same file)
 const CompetitionCard: React.FC<{
   title: string;
   subtitle: string;
   images: string[];
-  accentFrom: string; // e.g. "from-blue-500"
-  accentTo: string;   // e.g. "to-indigo-500"
+  accentFrom: string;
+  accentTo: string;
   href?: string;
-  bullets?: string[]; // NEW: combined, animated text block (single card)
-}> = ({ title, subtitle, images, accentFrom, accentTo, href, bullets }) => {
+  bullets?: string[];
+  mediaFit?: "cover" | "contain"; // ✅ NEW
+}> = ({ title, subtitle, images, accentFrom, accentTo, href, bullets, mediaFit = "cover" }) => {
   const [idx, setIdx] = React.useState(0);
   const hasCarousel = images.length > 1;
 
   // Auto-rotate images every 2.5s (only if >1 image)
   React.useEffect(() => {
-    if (!hasCarousel) {
-      return;
-    }
+    if (!hasCarousel) return;
     const t = setInterval(() => {
       setIdx((i) => (i + 1) % images.length);
     }, 2500);
@@ -159,9 +157,7 @@ const CompetitionCard: React.FC<{
             <h4 className="text-2xl font-extrabold text-gray-900">{title}</h4>
             <p className="text-gray-600">{subtitle}</p>
           </div>
-          <div
-            className={`inline-flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-r ${accentFrom} ${accentTo} shadow-md`}
-          >
+          <div className={`inline-flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-r ${accentFrom} ${accentTo} shadow-md`}>
             <Award className="h-6 w-6 text-white" aria-hidden="true" />
           </div>
         </div>
@@ -178,7 +174,7 @@ const CompetitionCard: React.FC<{
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.98 }}
             transition={{ duration: 0.6, ease: "easeInOut" }}
-            className="absolute inset-0 h-full w-full object-contain bg-white" // ✅ use object-contain
+            className={`absolute inset-0 h-full w-full ${mediaFit === "cover" ? "object-cover" : "object-contain"} bg-white`}
           />
         </AnimatePresence>
 
@@ -192,13 +188,13 @@ const CompetitionCard: React.FC<{
                 {images.map((_, i) => (
                   <span
                     key={i}
-                    className={`h-2 w-2 rounded-full transition-all ${i === idx ? "scale-110 bg-white" : "bg-white/50"
-                      }`}
+                    className={`h-2 w-2 rounded-full transition-all ${i === idx ? "scale-110 bg-white" : "bg-white/50"}`}
                   />
                 ))}
               </div>
             )}
           </div>
+
           {href && (
             <a
               href={href}
@@ -212,7 +208,7 @@ const CompetitionCard: React.FC<{
         </div>
       </div>
 
-      {/* NEW: Combined animated text block (inside the SAME card) */}
+      {/* Combined animated text block */}
       {bullets?.length ? (
         <motion.div
           className="px-6 pb-6 pt-4"
@@ -221,11 +217,7 @@ const CompetitionCard: React.FC<{
           viewport={{ once: true, amount: 0.2 }}
           variants={{
             hidden: { opacity: 0, y: 12 },
-            show: {
-              opacity: 1,
-              y: 0,
-              transition: { staggerChildren: 0.05, duration: 0.35 }
-            }
+            show: { opacity: 1, y: 0, transition: { staggerChildren: 0.05, duration: 0.35 } },
           }}
         >
           <div className="rounded-xl bg-gray-50 p-4 ring-1 ring-gray-100">
@@ -245,7 +237,6 @@ const CompetitionCard: React.FC<{
   );
 };
 
-
 const Card = ({ children, className = "" }: { children: React.ReactNode; className?: string }) => (
   <div className={`rounded-3xl bg-white shadow-xl ring-1 ring-gray-100 ${className}`}>{children}</div>
 );
@@ -253,24 +244,19 @@ const Card = ({ children, className = "" }: { children: React.ReactNode; classNa
 type CarouselItem = { icon: React.ReactNode; title: string; text: string };
 
 const CommunityCollaboration: React.FC<{ items: CarouselItem[] }> = ({ items }) => {
-  // --- responsive cards per page ---
   const [itemsPerView, setItemsPerView] = React.useState(1);
+
   React.useEffect(() => {
     const calc = () => {
-      if (window.innerWidth >= 1024) {
-        setItemsPerView(3);
-      } else if (window.innerWidth >= 768) {
-               setItemsPerView(2);
-             } else {
-               setItemsPerView(1);
-             }                               // sm
+      if (window.innerWidth >= 1024) setItemsPerView(3);
+      else if (window.innerWidth >= 768) setItemsPerView(2);
+      else setItemsPerView(1);
     };
     calc();
     window.addEventListener("resize", calc);
     return () => window.removeEventListener("resize", calc);
   }, []);
 
-  // --- split into pages & pad last page for tidy grid ---
   const pages = React.useMemo(() => {
     const chunks: (CarouselItem | null)[][] = [];
     for (let i = 0; i < items.length; i += itemsPerView) {
@@ -285,18 +271,14 @@ const CommunityCollaboration: React.FC<{ items: CarouselItem[] }> = ({ items }) 
 
   const totalPages = Math.max(1, pages.length);
 
-  // --- paging + autoplay controls ---
   const [page, setPage] = React.useState(0);
   const [autoPlay, setAutoPlay] = React.useState(true);
 
-  // knobs: delay between pages & slide animation duration
-  const [intervalMs] = React.useState(6000);  // increase for longer wait
-  const [transitionMs] = React.useState(900); // increase for slower slide
+  const [intervalMs] = React.useState(6000);
+  const [transitionMs] = React.useState(900);
 
   React.useEffect(() => {
-    if (!autoPlay || totalPages <= 1) {
-      return;
-    }
+    if (!autoPlay || totalPages <= 1) return;
     const id = setInterval(() => setPage((p) => (p + 1) % totalPages), intervalMs);
     return () => clearInterval(id);
   }, [autoPlay, intervalMs, totalPages]);
@@ -309,16 +291,11 @@ const CommunityCollaboration: React.FC<{ items: CarouselItem[] }> = ({ items }) 
       <div className="max-w-5xl mx-auto">
         <div className="mb-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold">Community & Collaboration</h2>
-          <p className="mt-3 text-gray-700">
-            Partnerships, policies, sustainability—and the people who benefit.
-          </p>
+          <p className="mt-3 text-gray-700">Partnerships, policies, sustainability—and the people who benefit.</p>
         </div>
 
-        {/* Slider */}
         <div className="relative">
-          {/* viewport */}
           <div className="overflow-hidden rounded-2xl">
-            {/* track */}
             <div
               className="flex"
               style={{
@@ -352,7 +329,6 @@ const CommunityCollaboration: React.FC<{ items: CarouselItem[] }> = ({ items }) 
             </div>
           </div>
 
-          {/* Arrows (outside, not overlapping) */}
           <button
             onClick={goPrev}
             aria-label="Previous"
@@ -374,7 +350,6 @@ const CommunityCollaboration: React.FC<{ items: CarouselItem[] }> = ({ items }) 
             <ChevronRight className="h-5 w-5 text-gray-700" />
           </button>
 
-          {/* Controls row: Play/Pause + dots */}
           <div className="mt-5 flex items-center justify-center gap-3">
             <button
               onClick={() => setAutoPlay((v) => !v)}
@@ -398,70 +373,54 @@ const CommunityCollaboration: React.FC<{ items: CarouselItem[] }> = ({ items }) 
               ))}
             </div>
           </div>
-
-          {/* Optional tiny helpers to tune timings in dev (remove if not needed) */}
-          {/* 
-          <div className="mt-2 flex justify-center gap-3 text-xs text-gray-500">
-            <button onClick={() => setIntervalMs((v) => Math.min(v + 1000, 12000))}
-              className="px-2 py-1 rounded border border-gray-200 hover:bg-white">+1s delay</button>
-            <button onClick={() => setIntervalMs((v) => Math.max(v - 1000, 2000))}
-              className="px-2 py-1 rounded border border-gray-200 hover:bg-white">-1s delay</button>
-            <button onClick={() => setTransitionMs((v) => Math.min(v + 200, 2000))}
-              className="px-2 py-1 rounded border border-gray-200 hover:bg-white">slower slide</button>
-            <button onClick={() => setTransitionMs((v) => Math.max(v - 200, 200))}
-              className="px-2 py-1 rounded border border-gray-200 hover:bg-white">faster slide</button>
-          </div>
-          */}
         </div>
       </div>
     </Section>
   );
 };
 
-
-
 // ---------- Page ----------
-
 const ImpactPage: React.FC = () => {
-
-  // --- Combined carousel (Partnership + Beneficiaries) ---
-  const carouselItems = React.useMemo(() => [
-    {
-      icon: <Handshake className="h-6 w-6 text-teal-600" />,
-      title: "Collaborative Pilots",
-      text: "Field-testing with NGOs, clinics, and universities to refine user safety and comfort.",
-    },
-    {
-      icon: <Landmark className="h-6 w-6 text-blue-700" />,
-      title: "Policy & Accessibility",
-      text: "Sharing findings with public bodies to support inclusive urban mobility standards.",
-    },
-    {
-      icon: <Leaf className="h-6 w-6 text-green-700" />,
-      title: "Sustainable Lifecycle",
-      text: "Durable design, modular parts, and recycling programs to extend product life.",
-    },
-    {
-      icon: <Sparkles className="h-6 w-6 text-fuchsia-600" />,
-      title: "User‑centered Access",
-      text: "Co‑designed with BVI users to solve real mobility pain points.",
-    },
-    {
-      icon: <Sparkles className="h-6 w-6 text-teal-600" />,
-      title: "Caregiver Peace of Mind",
-      text: "Optional app‑based location sharing and emergency alerts.",
-    },
-    {
-      icon: <Sparkles className="h-6 w-6 text-amber-600" />,
-      title: "Community Inclusion",
-      text: "Safer navigation supports education, employment, and social participation.",
-    },
-    {
-      icon: <Sparkles className="h-6 w-6 text-indigo-600" />,
-      title: "Scalable Pilots",
-      text: "University/NGO partnerships enable responsible, measurable rollouts.",
-    },
-  ], []);
+  const carouselItems = React.useMemo(
+    () => [
+      {
+        icon: <Handshake className="h-6 w-6 text-teal-600" />,
+        title: "Collaborative Pilots",
+        text: "Field-testing with NGOs, clinics, and universities to refine user safety and comfort.",
+      },
+      {
+        icon: <Landmark className="h-6 w-6 text-blue-700" />,
+        title: "Policy & Accessibility",
+        text: "Sharing findings with public bodies to support inclusive urban mobility standards.",
+      },
+      {
+        icon: <Leaf className="h-6 w-6 text-green-700" />,
+        title: "Sustainable Lifecycle",
+        text: "Durable design, modular parts, and recycling programs to extend product life.",
+      },
+      {
+        icon: <Sparkles className="h-6 w-6 text-fuchsia-600" />,
+        title: "User-centered Access",
+        text: "Co-designed with BVI users to solve real mobility pain points.",
+      },
+      {
+        icon: <Sparkles className="h-6 w-6 text-teal-600" />,
+        title: "Caregiver Peace of Mind",
+        text: "Optional app-based location sharing and emergency alerts.",
+      },
+      {
+        icon: <Sparkles className="h-6 w-6 text-amber-600" />,
+        title: "Community Inclusion",
+        text: "Safer navigation supports education, employment, and social participation.",
+      },
+      {
+        icon: <Sparkles className="h-6 w-6 text-indigo-600" />,
+        title: "Scalable Pilots",
+        text: "University/NGO partnerships enable responsible, measurable rollouts.",
+      },
+    ],
+    []
+  );
 
   return (
     <div className="bg-white text-gray-800 overflow-x-hidden">
@@ -488,12 +447,12 @@ const ImpactPage: React.FC = () => {
         }
         subtitle={
           <p className="mt-4 sm:mt-6 md:mt-8">
-            LiStick actively contributes to the UN Sustainable Development Goals (SDGs) by promoting inclusive, safe, and sustainable innovation          </p>
+            LiStick actively contributes to the UN Sustainable Development Goals (SDGs) by promoting inclusive, safe, and sustainable innovation
+          </p>
         }
         showScrollHint
         scrollTargetId="sdg"
       />
-
 
       {/* SDG ALIGNMENT */}
       <Section id="sdg" className="py-14 bg-gradient-to-b from-gray-50 to-white">
@@ -501,13 +460,10 @@ const ImpactPage: React.FC = () => {
           <Reveal>
             <div className="mb-10 text-center">
               <h2 className="text-3xl md:text-4xl font-bold">SDG Alignment</h2>
-              <p className="mt-3 text-gray-600">
-                Designing with people and planet in mind—accessibility, safety, & sustainability.
-              </p>
+              <p className="mt-3 text-gray-600">Designing with people and planet in mind—accessibility, safety, & sustainability.</p>
             </div>
           </Reveal>
 
-          {/* parent: stagger; children: fadeUp */}
           <motion.div
             className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5"
             variants={stagger(0.06, 0.12)}
@@ -537,7 +493,6 @@ const ImpactPage: React.FC = () => {
                   <p className="text-sm text-gray-600 mt-1">{g.desc}</p>
                 </div>
 
-                {/* subtle glow on hover */}
                 <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity">
                   <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500/15 to-teal-500/15 blur-xl" />
                 </div>
@@ -550,8 +505,7 @@ const ImpactPage: React.FC = () => {
               <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
                 <Leaf className="h-7 w-7 text-green-700 shrink-0" />
                 <p className="text-gray-700">
-                  We favor durable, modular hardware and responsible material choices to lower lifecycle impact. End-of-life
-                  plans include component reuse and recycling pathways.
+                  We favor durable, modular hardware and responsible material choices to lower lifecycle impact. End-of-life plans include component reuse and recycling pathways.
                 </p>
               </div>
             </Card>
@@ -559,42 +513,42 @@ const ImpactPage: React.FC = () => {
         </div>
       </Section>
 
-
-
-      {/* COMBINED: Partnership + Beneficiaries (auto‑sliding) */}
+      {/* COMBINED: Partnership + Beneficiaries (auto-sliding) */}
       <CommunityCollaboration items={carouselItems} />
 
-
       {/* TRACTION */}
-      <Section id='traction' className="py-16 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
-        {/* widen container a bit + add horizontal gutters */}
+      <Section id="traction" className="py-16 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <Reveal>
-            {/* Slim header (no giant wrapper card) */}
             <div className="text-center mb-10">
               <div className="mx-auto mb-6 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-r from-yellow-400 to-orange-500 shadow-lg">
                 <Award className="h-8 w-8 text-white" />
               </div>
-              <h3 className="text-4xl sm:text-5xl lg:text-6xl font-black text-gray-900">
-                Traction
-              </h3>
+              <h3 className="text-4xl sm:text-5xl lg:text-6xl font-black text-gray-900">Traction</h3>
               <p className="mt-4 text-gray-600 text-lg max-w-3xl mx-auto leading-relaxed">
                 Wins, programs, and grants that de-risk our roadmap.
               </p>
             </div>
           </Reveal>
 
-          {/* Stagger the three cards in */}
-          <motion.div
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch"
-            variants={stagger(0.1, 0.15)}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, amount: 0.2 }}
-          >
-            <motion.div variants={fadeUp} className="h-full">
+          {/* ✅ CARD CAROUSEL */}
+          {(() => {
+            // 1 / 2 / 3 cards per view based on screen width
+            const [itemsPerView, setItemsPerView] = React.useState(1);
+            React.useEffect(() => {
+              const calc = () => {
+                if (window.innerWidth >= 1280) setItemsPerView(3); // xl
+                else if (window.innerWidth >= 768) setItemsPerView(2); // md
+                else setItemsPerView(1); // sm
+              };
+              calc();
+              window.addEventListener("resize", calc);
+              return () => window.removeEventListener("resize", calc);
+            }, []);
 
+            const cards = [
               <CompetitionCard
+                key="uec"
                 title="UEC25 — USEK Entrepreneurship Challenge"
                 subtitle="#1 — Winners - March 5th 2025"
                 images={[uec1, uec2, uec3]}
@@ -606,11 +560,10 @@ const ImpactPage: React.FC = () => {
                   "Trip to Babson Build in USA",
                   "Seed perks + campus visibility",
                 ]}
-              // href="https://your-proof-link"
-              />
-            </motion.div>
-            <motion.div variants={fadeUp} className="h-full">
+                mediaFit="contain"
+              />,
               <CompetitionCard
+                key="yce"
                 title="YCE25 — Youth Competition Entrepreneur"
                 subtitle="#1 — Winners - April 30th 2025"
                 images={[yce1, yce2, yce3]}
@@ -622,45 +575,151 @@ const ImpactPage: React.FC = () => {
                   "Cash award of 1000$ + media coverage",
                   "Trip to Ville de Metz in France",
                 ]}
-              // href="https://your-proof-link"
-              />
-            </motion.div>
-            <motion.div variants={fadeUp} className="h-full">
-              <div className="h-full">
-                <CompetitionCard
-                  title="Prototype V1 Validation"
-                  subtitle="Field-tested with NGO - July 24th 2025"
-                  images={[proto1, proto2, proto3]}
-                  accentFrom="from-fuchsia-500"
-                  accentTo="to-pink-500"
-                  bullets={[
-                    "12 end-user trials with 'Blind with Vision' NGO",
-                    "Validated GPS tracking, emergency alerts, caregiver app and obstacle detection",
-                    "Ergonomics + UX iterations from real-world feedback",
-                  ]}
-                // href="https://your-demo-or-press-link"
-                />
+                mediaFit="contain"
+              />,
+              <CompetitionCard
+                key="proto"
+                title="Prototype V1 Validation"
+                subtitle="Field-tested with NGO - July 24th 2025"
+                images={[proto1, proto2, proto3]}
+                accentFrom="from-fuchsia-500"
+                accentTo="to-pink-500"
+                bullets={[
+                  "12 end-user trials with 'Blind with Vision' NGO",
+                  "Validated GPS tracking, emergency alerts, caregiver app and obstacle detection",
+                  "Ergonomics + UX iterations from real-world feedback",
+                ]}
+                mediaFit="contain"
+              />,
+              <CompetitionCard
+                key="metz"
+                title="Metz, France — Winner Trip"
+                subtitle="International exposure trip — November 2025"
+                images={[metz1, metz2, metz3, metz4, metz5, metz6]}
+                accentFrom="from-sky-500"
+                accentTo="to-blue-700"
+                bullets={[
+                  "Official winners trip to Ville de Metz (France)",
+                  "Startup exposure + ecosystem networking",
+                  "Pitch refinement + international visibility",
+                ]}
+                mediaFit="contain"
+              />,
+              <CompetitionCard
+                key="uspto"
+                title="USPTO — US Patent Filing"
+                subtitle="Patent filing submitted — December 2025"
+                images={[uspto1]}
+                accentFrom="from-amber-500"
+                accentTo="to-orange-600"
+                bullets={[
+                  "US patent filing submitted to USPTO with USEK TTO",
+                  "Protecting Li-Stick core tech + caregiver ecosystem",
+                  "Strengthening defensibility for partners and investors",
+                ]}
+                mediaFit="contain"
+              />,
+            ];
+
+            // chunk into pages
+            const pages = React.useMemo(() => {
+              const chunks: React.ReactNode[][] = [];
+              for (let i = 0; i < cards.length; i += itemsPerView) {
+                chunks.push(cards.slice(i, i + itemsPerView));
+              }
+              return chunks;
+            }, [cards, itemsPerView]);
+
+            const [page, setPage] = React.useState(0);
+            const totalPages = pages.length;
+
+            const goPrev = () => setPage((p) => (p - 1 + totalPages) % totalPages);
+            const goNext = () => setPage((p) => (p + 1) % totalPages);
+
+            return (
+              <div className="relative">
+                {/* viewport */}
+                <div className="overflow-hidden rounded-2xl">
+                  {/* track */}
+                  <div
+                    className="flex"
+                    style={{
+                      transform: `translateX(-${page * 100}%)`,
+                      transition: `transform 700ms`,
+                    }}
+                  >
+                    {pages.map((group, pageIndex) => (
+                      <div key={pageIndex} className="min-w-full">
+                        <div
+                          className={`grid gap-8 ${itemsPerView === 1
+                              ? "grid-cols-1"
+                              : itemsPerView === 2
+                                ? "grid-cols-1 md:grid-cols-2"
+                                : "grid-cols-1 md:grid-cols-2 xl:grid-cols-3"
+                            }`}
+                        >
+                          {group.map((card, idx) => (
+                            <div key={idx} className="h-full">
+                              {card}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* ✅ arrows for CARDS */}
+                <button
+                  onClick={goPrev}
+                  aria-label="Previous cards"
+                  className="hidden sm:inline-flex items-center justify-center
+                       absolute -left-6 lg:-left-8 top-1/2 -translate-y-1/2 z-10
+                       h-11 w-11 rounded-full bg-white/90 hover:bg-white
+                       shadow ring-1 ring-gray-200"
+                >
+                  <ChevronLeft className="h-5 w-5 text-gray-700" />
+                </button>
+
+                <button
+                  onClick={goNext}
+                  aria-label="Next cards"
+                  className="hidden sm:inline-flex items-center justify-center
+                       absolute -right-6 lg:-right-8 top-1/2 -translate-y-1/2 z-10
+                       h-11 w-11 rounded-full bg-white/90 hover:bg-white
+                       shadow ring-1 ring-gray-200"
+                >
+                  <ChevronRight className="h-5 w-5 text-gray-700" />
+                </button>
+
+                {/* dots */}
+                <div className="mt-6 flex items-center justify-center gap-2">
+                  {Array.from({ length: totalPages }).map((_, i) => (
+                    <button
+                      key={i}
+                      aria-label={`Traction page ${i + 1}`}
+                      onClick={() => setPage(i)}
+                      className={`h-2.5 rounded-full transition-all ${i === page ? "bg-indigo-600 w-7" : "bg-indigo-200 hover:bg-indigo-300 w-2.5"
+                        }`}
+                    />
+                  ))}
+                </div>
               </div>
-            </motion.div>
-          </motion.div>
+            );
+          })()}
         </div>
       </Section>
-
 
       {/* TESTIMONIALS */}
       <Section id="testimonials" className="py-16 bg-white">
         <div className="mx-auto max-w-5xl">
-          {/* Header */}
           <Reveal>
             <div className="mb-10 text-center">
               <h2 className="text-3xl md:text-4xl font-bold">Testimonials</h2>
-              <p className="mt-3 text-gray-600">
-                Signals from our prototype validation and community partners.
-              </p>
+              <p className="mt-3 text-gray-600">Signals from our prototype validation and community partners.</p>
             </div>
           </Reveal>
 
-          {/* Cards with staggered fade-up */}
           <motion.div
             className="grid md:grid-cols-2 gap-6"
             variants={stagger(0.08, 0.1)}
@@ -682,16 +741,11 @@ const ImpactPage: React.FC = () => {
             ))}
           </motion.div>
 
-          {/* NEW Partners Link */}
           <Reveal>
             <div className="mx-auto mt-12 max-w-3xl text-center">
               <p className="text-gray-600">
-                We collaborate with universities, NGOs, and industry to validate and
-                scale responsible pilots.
-                <a
-                  href="/about#partners"
-                  className="ml-2 font-semibold text-teal-700 hover:underline"
-                >
+                We collaborate with universities, NGOs, and industry to validate and scale responsible pilots.
+                <a href="/about#partners" className="ml-2 font-semibold text-teal-700 hover:underline">
                   See our partners →
                 </a>
               </p>
@@ -700,19 +754,16 @@ const ImpactPage: React.FC = () => {
         </div>
       </Section>
 
-
-
       {/* CTA */}
       <CTA
         title="Partner with us to scale accessible mobility"
-        subtitle="Let’s co‑create pilots, research, and standards that move cities—and people—forward."
+        subtitle="Let’s co-create pilots, research, and standards that move cities—and people—forward."
         primary={{ label: "Start a Pilot", href: "/about#contact" }}
         secondary={{ label: "Contact the Team", href: "/about#contact" }}
       />
 
       <Footer />
       <BackToTop />
-
     </div>
   );
 };
