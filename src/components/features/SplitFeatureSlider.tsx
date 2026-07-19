@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { ChevronLeft, ChevronRight, Play, Pause, Check } from "lucide-react";
 
 export type SlideItem = {
@@ -8,6 +8,7 @@ export type SlideItem = {
     caption?: string;
     alt?: string;
     bullets?: string[]; // optional: extra feature points
+    loading?: "eager" | "lazy";
 };
 
 type Props = {
@@ -36,10 +37,8 @@ const SplitFeatureSlider: React.FC<Props> = ({
     const [dir, setDir] = useState<1 | -1>(1);
     const [isPaused, setIsPaused] = useState(false);
 
-    // Respect prefers-reduced-motion for the initial autoplay state
-    const prefersReducedMotion =
-        typeof window !== "undefined" &&
-        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    // Respect prefers-reduced-motion for the initial autoplay state.
+    const prefersReducedMotion = useReducedMotion();
 
     const [autoOn, setAutoOn] = useState<boolean>(() => !prefersReducedMotion && autoPlay);
     // NEW: shows whether it's actually playing (not paused by hover/visibility)
@@ -55,6 +54,26 @@ const SplitFeatureSlider: React.FC<Props> = ({
         setDir(i > index ? 1 : -1);
         setIndex(i);
     };
+
+    // A role-tab change replaces the data set. Start that group from its first slide
+    // without remounting the component or creating a second autoplay timer.
+    useEffect(() => {
+        setIndex(0);
+        setDir(1);
+    }, [items]);
+
+    // Keep the first screenshot eager, then warm the remaining role-specific
+    // screenshots after the initial render without blocking interaction.
+    useEffect(() => {
+        const timeout = window.setTimeout(() => {
+            items.slice(1).forEach(({ src }) => {
+                const image = new Image();
+                image.src = src;
+            });
+        }, 1200);
+
+        return () => window.clearTimeout(timeout);
+    }, [items]);
 
     // swipe
     const startX = useRef<number | null>(null);
@@ -72,7 +91,7 @@ const SplitFeatureSlider: React.FC<Props> = ({
         if (!isPlaying || count <= 1) return;
         const t = setInterval(() => go(1), interval);
         return () => clearInterval(t);
-    }, [isPlaying, interval, index, count, go]);
+    }, [isPlaying, interval, count, go]);
 
 
     // pause when tab hidden
@@ -93,19 +112,24 @@ const SplitFeatureSlider: React.FC<Props> = ({
         return () => mql.removeEventListener("change", onChange);
     }, []);
 
-    const current = items[index];
+    const currentIndex = count > 0 ? Math.min(index, count - 1) : 0;
+    const current = items[currentIndex];
+
+    if (!current) return null;
 
     const imgVariants = {
-        enter: (d: 1 | -1) => ({ x: d === 1 ? 60 : -60, opacity: 0 }),
+        enter: (d: 1 | -1) => prefersReducedMotion ? { opacity: 0 } : ({ x: d === 1 ? 60 : -60, opacity: 0 }),
         center: { x: 0, opacity: 1 },
-        exit: (d: 1 | -1) => ({ x: d === 1 ? -60 : 60, opacity: 0 })
+        exit: (d: 1 | -1) => prefersReducedMotion ? { opacity: 0 } : ({ x: d === 1 ? -60 : 60, opacity: 0 })
     };
 
     const textVariants = {
-        enter: (d: 1 | -1) => ({ y: d === 1 ? 16 : -16, opacity: 0 }),
+        enter: (d: 1 | -1) => prefersReducedMotion ? { opacity: 0 } : ({ y: d === 1 ? 16 : -16, opacity: 0 }),
         center: { y: 0, opacity: 1 },
-        exit: (d: 1 | -1) => ({ y: d === 1 ? -16 : 16, opacity: 0 })
+        exit: (d: 1 | -1) => prefersReducedMotion ? { opacity: 0 } : ({ y: d === 1 ? -16 : 16, opacity: 0 })
     };
+
+    const slideTransition = prefersReducedMotion ? { duration: 0 } : { duration: 0.28, ease: "easeOut" as const };
 
     return (
         <section
@@ -122,7 +146,7 @@ const SplitFeatureSlider: React.FC<Props> = ({
         >
             {/* hidden live region to announce slides to screen readers */}
             <p className="sr-only" aria-live="polite">
-                {current.title ? `${current.title} — ` : ""}Slide {index + 1} of {count}
+                {current.title ? `${current.title} — ` : ""}Slide {currentIndex + 1} of {count}
             </p>
 
             <div className="grid gap-8 lg:gap-12 xl:gap-16 lg:grid-cols-2 items-center">
@@ -136,7 +160,7 @@ const SplitFeatureSlider: React.FC<Props> = ({
                             initial="enter"
                             animate="center"
                             exit="exit"
-                            transition={{ duration: 0.28, ease: "easeOut" }}
+                            transition={slideTransition}
                         >
                             <h3 className="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-900">
                                 {current.title ?? "Feature"}
@@ -157,7 +181,7 @@ const SplitFeatureSlider: React.FC<Props> = ({
                             ) : null}
 
                             <div className="mt-6 text-sm text-gray-500">
-                                {index + 1} / {count}
+                                {currentIndex + 1} / {count}
                             </div>
                         </motion.div>
                     </AnimatePresence>
@@ -183,10 +207,11 @@ const SplitFeatureSlider: React.FC<Props> = ({
                                         initial="enter"
                                         animate="center"
                                         exit="exit"
-                                        transition={{ duration: 0.28, ease: "easeOut" }}
+                                        transition={slideTransition}
                                         src={current.src}
                                         alt={current.alt ?? current.title ?? "Slide"}
                                         className="max-h-full max-w-full object-contain select-none"
+                                        loading={current.loading ?? (currentIndex === 0 ? "eager" : "lazy")}
                                         draggable={false}
                                     />
                                 </AnimatePresence>
@@ -228,12 +253,14 @@ const SplitFeatureSlider: React.FC<Props> = ({
                         <div className="mt-4 flex justify-center gap-2">
                             {items.map((_, i) => (
                                 <button
+                                    type="button"
                                     key={i}
                                     aria-label={`Go to slide ${i + 1}`}
+                                    aria-current={i === currentIndex ? "true" : undefined}
                                     onClick={() => goTo(i)}
                                     className={[
                                         "h-2.5 w-2.5 rounded-full transition",
-                                        i === index ? "bg-gray-800" : "bg-gray-300 hover:bg-gray-400"
+                                        i === currentIndex ? "bg-gray-800" : "bg-gray-300 hover:bg-gray-400"
                                     ].join(" ")}
                                 />
                             ))}

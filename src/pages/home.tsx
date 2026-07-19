@@ -3,20 +3,17 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import { Eye, Navigation, Users, Heart, Shield, Zap, Target, Award, AlertTriangle, Globe, DollarSign, ExternalLink } from "lucide-react";
 import { Link } from "react-router-dom";
-import StatCard, { NumberCounter } from "../components/features/StatCard";
 import { easeOut } from "framer-motion"; 
 import Footer from "../components/common/Footer";
+import StatCard, { NumberCounter } from "../components/features/StatCard";
 
 // shared components
 import Hero from "../components/features/Hero";
 import Section from "../components/ui/Section";
 import CTA from "../components/common/CTA";
 
-// gallery images
-import pic1 from "../assets/images/cane_pic/pic1.jpg"
-import pic2 from "../assets/images/cane_pic/pic2.jpg";
-import pic3 from "../assets/images/cane_pic/pic3.jpg";
-// import pic4 from "../assets/images/cane_pic/pic4.png";
+// Current product image. The older cane images remain available for the V1 archive on Features.
+import liStickV2Image from "../assets/images/cane_pic/li-stick-v2-prototype.png";
 import liIcon from "../assets/images/Li-stick icon.png";
 
 // team photos
@@ -33,17 +30,6 @@ import yce1 from "../assets/images/awards/yce1.jpg";
 import yce2 from "../assets/images/awards/yce2.jpg";
 import yce3 from "../assets/images/awards/yce3.jpg";
 import BackToTop from "../components/ui/BackToTop";
-
-const gridVariants = {
-    hidden: {},
-    show: {
-        transition: {
-            staggerChildren: 0.18, // spacing between cards
-            delayChildren: 0.12,   // wait before first card
-            when: "beforeChildren",
-        },
-    },
-};
 
 const tileVariants = {
     hidden: { opacity: 0, y: 28 },
@@ -158,9 +144,6 @@ const ImpactStatTile: React.FC<{
 };
 
 
-
-// TS-friendly animated Link
-const MotionLink = motion(Link);
 
 const teamMembers = [
 {
@@ -279,40 +262,6 @@ const CompetitionCard: React.FC<{
 const Home: React.FC = () => {
     const dynamicTitles = ["Safety", "Guidance", "Confidence", "Reliability", "Accessibility", "Precision"];
     const [currentTitleIndex, setCurrentTitleIndex] = useState(0);
-
-    // top of the file
-    type ProductItem = {
-        id: number;
-        image: string;
-        title: string;
-        subtitle: string;
-        to?: string; // defaults to "/features"
-    };
-
-    const productImages: ProductItem[] = [
-        {
-            id: 1,
-            image: pic1,
-            title: "Overhead hazard detection",
-            subtitle: "Ultrasonic and water level sensor fusion",
-            to: "/features",
-        },
-        {
-            id: 2,
-            image: pic2,
-            title: "Seamless guidance",
-            subtitle: "Buzzer and audio",
-            to: "/features",
-        },
-        {
-            id: 3,
-            image: pic3,
-            title: "Emergency-ready",
-            subtitle: "Li-Fi, GPS, and caregiver mobile app",
-            to: "/features",
-        },
-    ];
-
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -443,64 +392,71 @@ const Home: React.FC = () => {
             </Section>
 
             {/* Product Showcase */}
-            <Section id='solution' className="py-20 bg-gradient-to-br from-gray-50 via-blue-50/30 to-teal-50/30 relative overflow-hidden">
+            <Section id="solution" className="py-20 bg-gradient-to-br from-gray-50 via-blue-50/30 to-teal-50/30 relative overflow-hidden">
                 {/* Background decoration */}
                 <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-blue-100/40 via-transparent to-transparent" />
                 <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-teal-200/30 to-transparent rounded-full blur-3xl" />
 
                 <div className="relative z-10">
-                    <div className="text-center mb-16">
+                    <div className="text-center mb-12">
                         <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-r from-blue-500 to-teal-500 rounded-2xl mb-6">
                             <Target className="w-6 h-6 text-white" />
                         </div>
+                        <p className="mb-3 text-sm font-bold uppercase tracking-[0.24em] text-blue-700">
+                            Current Commercial MVP
+                        </p>
                         <h2 className="text-5xl md:text-6xl font-black mb-6 bg-gradient-to-r from-gray-900 via-blue-800 to-teal-800 bg-clip-text text-transparent">
-                            Meet Li-Stick
+                            Meet Li-Stick V2
                         </h2>
                         <p className="text-xl md:text-2xl text-gray-600 max-w-4xl mx-auto font-light leading-relaxed">
-                            A revolutionary assistive device meticulously engineered for reliability, accessibility, and seamless daily use.
+                            Li-Stick V2 combines adaptive obstacle detection, tactile guidance, AI-supported environmental awareness and caregiver connectivity in one safety-first mobility platform.
                         </p>
                     </div>
-                    {/* Gallery grid */}
-                    <div className="max-w-6xl mx-auto">
+                    <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-10 lg:gap-14 items-center">
                         <motion.div
-                            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
-                            variants={gridVariants}
+                            className="relative mx-auto w-full max-w-2xl rounded-3xl border border-white/60 bg-white/70 p-6 shadow-xl"
                             initial="hidden"
                             whileInView="show"
                             viewport={{ once: true, amount: 0.2 }}
+                            variants={tileVariants}
                         >
-                            {productImages.map((item, index) => (
-                                <MotionLink
-                                    key={item.id}
-                                    to={item.to ?? "/features"}
-                                    aria-label={`${item.title} — learn more`}
-                                    className="group relative aspect-[3/4] rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-700 bg-white/80 backdrop-blur-sm border border-white/50 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
-                                    // keep if you still want the old CSS delay; otherwise remove:
-                                    style={{ animationDelay: `${index * 100}ms` }}
-                                    variants={tileVariants}
-                                >
-                                    <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-teal-500/5" />
-                                    <img
-                                        src={item.image}
-                                        alt={`Li-Stick showcase: ${item.title}`}
-                                        className="w-full h-full object-contain p-4 transition-all duration-700 ease-out group-hover:scale-110 group-hover:rotate-1"
-                                        loading="lazy"
-                                    />
-
-                                    {/* darken on hover */}
-                                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-                                    {/* subtle border glow on hover */}
-                                    <div className="absolute inset-0 rounded-3xl border-2 border-transparent group-hover:border-white/20 transition-all duration-500" />
-
-                                    {/* Hover overlay content (per-card) */}
-                                    <div className="absolute inset-x-0 bottom-0 p-6 transform translate-y-full group-hover:translate-y-0 transition-transform duration-500">
-                                        <p className="text-white font-semibold text-lg">{item.title}</p>
-                                        <p className="text-white/80 text-sm">{item.subtitle}</p>
-                                    </div>
-                                </MotionLink>
-                            ))}
+                            <div className="relative aspect-[780/708] overflow-hidden rounded-2xl bg-white">
+                                <img
+                                    src={liStickV2Image}
+                                    alt="Li-Stick V2 smart cane prototype with integrated electronic enclosure"
+                                    className="h-full w-full object-contain p-4 transition-transform duration-700 hover:scale-[1.03]"
+                                    loading="lazy"
+                                    width="780"
+                                    height="708"
+                                />
+                            </div>
+                            <p className="mt-4 text-center text-sm font-semibold uppercase tracking-[0.18em] text-gray-500">
+                                Current V2 prototype
+                            </p>
                         </motion.div>
+
+                        <div>
+                            <p className="mb-5 text-sm font-semibold uppercase tracking-[0.18em] text-gray-500">At a glance</p>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                {[
+                                    "Three-Zone Obstacle Awareness",
+                                    "Head-Level Hazard Detection",
+                                    "Sweep-Aware Sensing",
+                                    "Speed-Adaptive Warning Distances",
+                                    "Directional Vibration Feedback",
+                                    "AI Vision and Offline Voice Guidance",
+                                    "SOS and Fall Detection",
+                                    "Live Caregiver Connectivity",
+                                    "Dual-Mode Mobile Application",
+                                    "Wi-Fi Setup and Cloud Synchronization",
+                                ].map((label) => (
+                                    <div key={label} className="flex items-start gap-3 rounded-2xl border border-gray-100 bg-white/80 px-4 py-3 shadow-sm">
+                                        <span className="mt-1 h-2.5 w-2.5 shrink-0 rounded-full bg-gradient-to-r from-blue-500 to-teal-500" aria-hidden="true" />
+                                        <span className="text-sm font-semibold leading-snug text-gray-800">{label}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
                     </div>
 
                     <div className="mt-10 flex justify-center">
@@ -539,49 +495,49 @@ const Home: React.FC = () => {
                     {[
                         {
                             icon: Eye,
-                            title: "Advanced Obstacle Detection",
+                            title: "Adaptive Obstacle Awareness",
                             description:
-                                "Real-time ultrasonic sensing technology with 360° awareness keeps you informed of potential hazards ahead.",
+                                "Three sensing zones and motion-aware thresholds support directional and head-level hazard detection.",
                             color: "from-blue-500 to-blue-600",
                             bgColor: "from-blue-50 to-blue-100/50",
                         },
                         {
                             icon: Navigation,
-                            title: "Precise GPS Tracking",
+                            title: "Tactile and Voice Guidance",
                             description:
-                                "Military-grade location services with real-time caregiver visibility for ultimate peace of mind.",
+                                "Directional vibration and offline speech provide complementary feedback.",
                             color: "from-teal-500 to-teal-600",
                             bgColor: "from-teal-50 to-teal-100/50",
                         },
                         {
                             icon: Zap,
-                            title: "Li-Fi Communication",
+                            title: "Safety Controls",
                             description:
-                                "Lightning-fast, ultra-secure light-based data transfer between your cane and smart hub.",
+                                "SOS, fall detection, privacy and temporary guidance controls remain available through accessible physical actions.",
                             color: "from-purple-500 to-purple-600",
                             bgColor: "from-purple-50 to-purple-100/50",
                         },
                         {
                             icon: Shield,
-                            title: "Safety-First Design",
+                            title: "Connected Caregiver Support",
                             description:
-                                "Triple-redundant safety systems with crystal-clear audio alerts inspire complete user confidence.",
+                                "Live state, alerts, location, history and cane access are available through the caregiver experience.",
                             color: "from-green-500 to-green-600",
                             bgColor: "from-green-50 to-green-100/50",
                         },
                         {
                             icon: Target,
-                            title: "Precision Navigation",
+                            title: "Local Safety First",
                             description:
-                                "Seamless indoor-outdoor guidance with centimeter-level accuracy and intuitive waypoint system.",
+                                "The ESP32 safety engine continues operating even if internet or AI services are unavailable.",
                             color: "from-orange-500 to-orange-600",
                             bgColor: "from-orange-50 to-orange-100/50",
                         },
                         {
                             icon: Heart,
-                            title: "Ergonomic Excellence",
+                            title: "AI-Supported Environmental Awareness",
                             description:
-                                "Thoughtfully designed grip with haptic feedback and intuitive controls for comfortable all-day use.",
+                                "Raspberry Pi vision supports local object recognition and stabilized spoken guidance while optimization continues.",
                             color: "from-rose-500 to-rose-600",
                             bgColor: "from-rose-50 to-rose-100/50",
                         },
@@ -620,7 +576,7 @@ const Home: React.FC = () => {
             </Section>
 
             {/* Team */} {/* Moved this section up */}
-            <Section id='solution' className="py-20 bg-gradient-to-br from-gray-50 via-blue-50/30 to-teal-50/30 relative overflow-hidden">
+            <Section id="team" className="py-20 bg-gradient-to-br from-gray-50 via-blue-50/30 to-teal-50/30 relative overflow-hidden">
                 <div className="text-center mb-16">
                     <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-2xl mb-6">
                         <Users className="w-6 h-6 text-white" />
@@ -812,19 +768,17 @@ const Home: React.FC = () => {
                     />
 
                     <ImpactStatTile
-                        kind="count"
-                        value={99.9}
-                        decimals={1}
-                        suffix="%"
-                        label="Accuracy Rate"
+                        kind="text"
+                        text="V2"
+                        label="MVP Validation Ongoing"
                         icon={Target}
                         color="from-teal-400 to-teal-500"
                     />
 
                     <ImpactStatTile
                         kind="text"
-                        text="24/7"
-                        label="Support Available"
+                        text="Local"
+                        label="Safety + Connected Support"
                         icon={Shield}
                         color="from-purple-400 to-purple-500"
                     />
@@ -1004,10 +958,10 @@ const Home: React.FC = () => {
 
             {/* CTA */}
             <CTA
-                title="Ready to Experience True Freedom?"
-                subtitle="Join thousands of users worldwide who have discovered independence, safety, and confidence with LiStick's revolutionary assistive technology."
-                primary={{ label: "Get LiStick Today", href: "/contact" }}
-                secondary={{ label: "Schedule a Demo", href: "/contact" }}
+                title="Help us make independent mobility safer."
+                subtitle="Li-Stick V2 is being tested and validated as a safety-first mobility platform for independent users and their caregivers."
+                primary={{ label: "Request a demo", href: "/contact" }}
+                secondary={{ label: "Contact the team", href: "/contact" }}
             />
             <Footer />
             <BackToTop />
