@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, Play, Pause, Check } from "lucide-react";
 
@@ -47,10 +47,10 @@ const SplitFeatureSlider: React.FC<Props> = ({
 
     const count = items.length;
 
-    const go = (d: 1 | -1) => {
+    const go = useCallback((d: 1 | -1) => {
         setDir(d);
         setIndex((p) => (p + d + count) % count);
-    };
+    }, [count]);
     const goTo = (i: number) => {
         setDir(i > index ? 1 : -1);
         setIndex(i);
@@ -72,7 +72,7 @@ const SplitFeatureSlider: React.FC<Props> = ({
         if (!isPlaying || count <= 1) return;
         const t = setInterval(() => go(1), interval);
         return () => clearInterval(t);
-    }, [isPlaying, interval, index, count]);
+    }, [isPlaying, interval, index, count, go]);
 
 
     // pause when tab hidden

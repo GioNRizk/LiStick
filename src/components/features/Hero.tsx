@@ -93,9 +93,9 @@ const Hero: React.FC<Props> = ({
 
                 {/* Subtitle */}
                 {subtitle && (
-                    <p className="text-base sm:text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mt-4">
+                    <div className="text-base sm:text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mt-4">
                         {subtitle}
-                    </p>
+                    </div>
                 )}
 
                 {/* CTA */}

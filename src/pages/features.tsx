@@ -32,18 +32,22 @@ import {
 import pic4 from "../assets/images/cane_pic/pic4.png";
 import liIcon from "../assets/images/Li-stick icon.png";
 
-import apppic1 from "../assets//images/app_pic/app pic (1).png";
-import apppic2 from "../assets//images/app_pic/app pic (2).png";
-import apppic3 from "../assets//images/app_pic/app pic (3).png";
-import apppic4 from "../assets//images/app_pic/app pic (4).png";
-import apppic5 from "../assets//images/app_pic/app pic (5).png";
-import apppic6 from "../assets//images/app_pic/app pic (6).png";
-import apppic7 from "../assets//images/app_pic/app pic (7).png";
-import apppic8 from "../assets//images/app_pic/app pic (8).png";
-import apppic9 from "../assets//images/app_pic/app pic (9).png";
-import apppic10 from "../assets//images/app_pic/app pic (10).png";
-import apppic11 from "../assets//images/app_pic/app pic (11).png";
-import apppic12 from "../assets//images/app_pic/app pic (12).png";
+import blindUserHome from "../assets/images/app_pic/blind-user-home.jpeg";
+import liveCaneLocationModal from "../assets/images/app_pic/live-cane-location-modal.jpeg";
+import mapOverview from "../assets/images/app_pic/map-overview.jpeg";
+import activityHistoryOverview from "../assets/images/app_pic/activity-history-overview.jpeg";
+import historyFilterModal from "../assets/images/app_pic/history-filter-modal.jpeg";
+import exportOptions from "../assets/images/app_pic/export-options.jpeg";
+import lockScreenNotifications from "../assets/images/app_pic/li-stick-lock-screen-notifications.jpg";
+import stickOfflineDialog from "../assets/images/app_pic/stick-offline-dialog.jpeg";
+import navigationScreen from "../assets/images/app_pic/navigation-screen.jpeg";
+import voiceCommands from "../assets/images/app_pic/voice-commands.jpeg";
+import nearbyPlaces from "../assets/images/app_pic/nearby-places.jpeg";
+import linkedCanesWithDevice from "../assets/images/app_pic/linked-canes-with-device.jpeg";
+import getAccessScreen from "../assets/images/app_pic/get-access-screen.jpeg";
+import peopleISupportScreen from "../assets/images/app_pic/people-i-support-screen.jpeg";
+import accountHub from "../assets/images/app_pic/account-hub.jpeg";
+import helpCenterCollapsed from "../assets/images/app_pic/help-center-collapsed.jpeg";
 import SplitFeatureSlider from "../components/features/SplitFeatureSlider";
 
 const HOTSPOTS: Hotspot[] = [ // This is a constant, so it should be outside the component
@@ -59,80 +63,183 @@ const HOTSPOTS: Hotspot[] = [ // This is a constant, so it should be outside the
 
 type SlideWithBullets = BaseSlideItem & { bullets?: string[] };
 
-// Keep this array OUTSIDE of render (module scope or useMemo) to avoid recreating it:
+// Keep this array OUTSIDE of render so the slider can retain its existing behavior.
 const ITEMS: SlideWithBullets[] = [
   {
-    src: apppic12,
-    title: "Secure Login",
-    caption: "Sign in to monitor the stick and access caregiver tools.",
-    bullets: ["Email + password", "Forgot password flow", "Link to create account"]
+    src: blindUserHome,
+    title: "Accessible Blind User Home",
+    alt: "Li-Stick blind user home screen showing cane status, location, nearest place, and latest alert",
+    bullets: [
+      "Large accessible controls designed for visually impaired users",
+      "Displays cane status, current location, nearest place, and latest alert",
+      "Supports voice feedback and haptic interaction",
+      "Gives quick access to navigation and nearby services"
+    ]
   },
   {
-    src: apppic11,
-    title: "Create Account",
-    caption: "Register a caregiver profile in a few quick steps.",
-    bullets: ["Name, username, email", "Password setup", "Age & gender selection"]
+    src: liveCaneLocationModal,
+    title: "Live Cane Location Tracking",
+    alt: "Li-Stick live cane location modal with real-time location and map sharing actions",
+    bullets: [
+      "Displays the current real-time Li-Stick position",
+      "Allows caregivers to refresh and follow the cane location",
+      "Shows the latest known position when live data is unavailable",
+      "Provides direct map and location-sharing actions"
+    ]
   },
   {
-    src: apppic2,
-    title: "Account Profile",
-    caption: "Review personal details and manage access.",
-    bullets: ["Edit profile info", "Reset password", "Logout anytime", "Delete account"]
+    src: mapOverview,
+    title: "Interactive Map Experience",
+    alt: "Li-Stick map overview showing live and historical cane location markers",
+    bullets: [
+      "Visualizes live and historical cane locations",
+      "Supports full-screen map viewing",
+      "Shows caregiver location and last known cane position",
+      "Provides location refresh, zoom, and map controls"
+    ]
   },
   {
-    src: apppic10,
-    title: "Location History",
-    caption: "See every recorded location at a glance.",
-    bullets: ["Google Maps link per entry", "Date & time stamps", "Requester/Caregiver shown", "Offline/Online Status", "Location export options", "Filter records", "Map view per location"]
+    src: activityHistoryOverview,
+    title: "Activity and Alert History",
+    alt: "Li-Stick activity history showing SOS, fall, online, and offline events",
+    bullets: [
+      "Displays SOS, fall, online, and offline events",
+      "Organizes activity records chronologically",
+      "Provides clear status labels and event information",
+      "Helps caregivers review previous cane activity"
+    ]
   },
   {
-    src: apppic9,
-    title: "Map View",
-    caption: "Power tools right on the map toolbar to view location histories on a map",
-    bullets: ["Full Screen Button", "My Location view", " Maps navigation options", "Location export options"]
+    src: historyFilterModal,
+    title: "Advanced History Filters",
+    alt: "Li-Stick history filter modal with date, alert, status, display, and sorting options",
+    bullets: [
+      "Filters records by date and time",
+      "Filters by alert and connectivity status",
+      "Supports different display and sorting options",
+      "Makes large activity histories easier to review"
+    ]
   },
   {
-    src: apppic7,
-    title: "Map View — Standard in full screen mode",
-    caption: "Visualize recorded locations on a clean map.",
-    bullets: ["Pin clustering", "Pan & zoom", "Quick overview of movement", "My Location view", "Switch map style button"]
+    src: exportOptions,
+    title: "Flexible History Export",
+    alt: "Li-Stick export options modal offering Excel, PDF, text, and message sharing",
+    bullets: [
+      "Exports records as Excel, PDF, or text",
+      "Supports message-based location sharing",
+      "Allows caregivers to preserve and share activity data",
+      "Provides practical reporting for families and care providers"
+    ]
   },
   {
-    src: apppic8,
-    title: "Map View — Satellite in full scree mode",
-    caption: "Switch to satellite imagery for more context.",
-    bullets: ["Terrain details", "Landmarks visible", "Same pins, richer view", "My Location view", "Switch map style button"]
+    src: lockScreenNotifications,
+    title: "Real-Time Safety Notifications",
+    alt: "Li-Stick lock screen showing fall detection, SOS, and cane status notifications",
+    bullets: [
+      "Sends SOS and fall detection alerts",
+      "Notifies caregivers when the cane goes online or offline",
+      "Displays urgent alerts directly on the lock screen",
+      "Improves caregiver awareness and emergency response"
+    ]
   },
   {
-    src: apppic6,
-    title: "Location Details",
-    caption: "Open precise directions or share instantly or toggle between locations",
-    bullets: ["Exact date & time", "Requester type", "Open in Google Maps (Driving Mode)", "Share location"]
+    src: stickOfflineDialog,
+    title: "Offline Status Awareness",
+    alt: "Li-Stick offline dialog warning that the cane must be online before requesting live data",
+    bullets: [
+      "Clearly warns when the cane is offline",
+      "Preserves access to the latest known activity and location",
+      "Prevents caregivers from assuming that old data is live",
+      "Supports safer decision-making during connectivity loss"
+    ]
   },
   {
-    src: apppic5,
-    title: "Filter Records",
-    caption: "Narrow results to what matters now.",
-    bullets: ["Date & time range", "Requester filter", "Ascending / descending order"]
+    src: navigationScreen,
+    title: "Accessible Navigation",
+    alt: "Li-Stick navigation screen with start, stop, map, and saved-place guidance controls",
+    bullets: [
+      "Starts and stops navigation through simple controls",
+      "Supports map-based destination guidance",
+      "Provides access to saved places",
+      "Uses voice and haptic assistance for safer movement"
+    ]
   },
   {
-    src: apppic3,
-    title: "Export Single Entry",
-    caption: " Download or share just one location record.",
-    bullets: ["Choose format per item", "Lightweight, focused export", "Quick share to your contacts to get to the visually impaired"]
+    src: voiceCommands,
+    title: "Voice Command Assistance",
+    alt: "Li-Stick voice commands screen with location, nearby places, navigation, and caregiver actions",
+    bullets: [
+      "Supports commands such as “Where am I?”",
+      "Provides nearby-place information",
+      "Starts navigation through accessible voice interaction",
+      "Helps visually impaired users contact or request a caregiver"
+    ]
   },
   {
-    src: apppic4,
-    title: "Export Options",
-    caption: "Take the data with you in the format you prefer.",
-    bullets: ["Excel (.xlsx)", "PDF (.pdf)", "Text file (.txt)", "Text message"]
-
+    src: nearbyPlaces,
+    title: "What’s Around Me",
+    alt: "Li-Stick nearby places screen listing accessible locations and their distances",
+    bullets: [
+      "Identifies useful nearby places",
+      "Helps users understand their surroundings",
+      "Supports accessible location exploration",
+      "Connects nearby results with navigation actions"
+    ]
   },
   {
-    src: apppic1,
-    title: "Offline Message",
-    caption: "Get a clear notice when you try to request a location and Li-Stick was offline.",
-    bullets: ["Explains the issue", "Prompts to try again when online"]
+    src: linkedCanesWithDevice,
+    title: "Linked Cane Management",
+    alt: "Li-Stick linked canes screen showing a connected cane, device status, and management actions",
+    bullets: [
+      "Displays canes connected to the caregiver account",
+      "Shows the linked Li-Stick name and device status",
+      "Provides access to cane management actions",
+      "Prepares the platform for future multi-cane support"
+    ]
+  },
+  {
+    src: getAccessScreen,
+    title: "Secure Caregiver Access",
+    alt: "Li-Stick get access screen with QR scanning and manual access-code entry",
+    bullets: [
+      "Allows caregivers to scan a QR code",
+      "Supports manual access-code entry",
+      "Connects caregivers to the correct visually impaired user",
+      "Simplifies secure account and cane linking"
+    ]
+  },
+  {
+    src: peopleISupportScreen,
+    title: "People I Support",
+    alt: "Li-Stick people I support screen listing connected visually impaired users and permissions",
+    bullets: [
+      "Displays visually impaired users connected to the caregiver",
+      "Shows access and relationship information",
+      "Supports caregiver permission management",
+      "Prepares the app for multiple caregiver relationships"
+    ]
+  },
+  {
+    src: accountHub,
+    title: "Centralized Account Hub",
+    alt: "Li-Stick account hub with profile, settings, cane, caregiver, help, and legal tools",
+    bullets: [
+      "Organizes profile, settings, cane, and caregiver tools",
+      "Provides access to help and legal information",
+      "Simplifies account and device management",
+      "Groups important actions in one accessible location"
+    ]
+  },
+  {
+    src: helpCenterCollapsed,
+    title: "Help Center and FAQs",
+    alt: "Li-Stick help center showing expandable FAQ categories and common questions",
+    bullets: [
+      "Provides answers to common Li-Stick questions",
+      "Organizes help topics into expandable sections",
+      "Includes guidance about offline operation",
+      "Helps users solve common issues independently"
+    ]
   }
 ];
 

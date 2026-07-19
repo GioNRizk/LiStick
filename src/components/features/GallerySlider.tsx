@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, Play, Pause } from "lucide-react";
 
@@ -36,7 +36,7 @@ const GallerySlider: React.FC<Props> = ({
 
     const count = items.length;
 
-    const go = (dir: 1 | -1) => {
+    const go = useCallback((dir: 1 | -1) => {
         setDirection(dir);
         setIndex((prev) => {
             const next = prev + dir;
@@ -44,7 +44,7 @@ const GallerySlider: React.FC<Props> = ({
             if (next >= count) return 0;
             return next;
         });
-    };
+    }, [count]);
 
     const goTo = (i: number) => {
         setDirection(i > index ? 1 : -1);
@@ -72,7 +72,7 @@ const GallerySlider: React.FC<Props> = ({
         if (!autoOn || isPaused || count <= 1) return;
         const t = setInterval(() => go(1), interval);
         return () => clearInterval(t);
-    }, [autoOn, isPaused, interval, index, count]);
+    }, [autoOn, isPaused, interval, index, count, go]);
 
     useEffect(() => {
         const onVis = () => setIsPaused(document.hidden ? true : false);
